@@ -3,11 +3,10 @@ import json
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-username = 'administrator@vsphere.local'
-password = 'VMware123!'
-sddc_manager_ip = 'sddc-manager.vcf.sddc.lab'
-
-def get_vcf_token(username, password, sddc_manager_ip):
+def get_vcf_token():
+    username = 'administrator@vsphere.local'
+    password = 'VMware123!'
+    sddc_manager_ip = 'sddc-manager.vcf.sddc.lab'
     url = f"https://{sddc_manager_ip}//v1/tokens"
 
     payload = json.dumps({
@@ -23,6 +22,3 @@ def get_vcf_token(username, password, sddc_manager_ip):
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     return response.json()['accessToken']
-
-
-print(get_vcf_token(username, password, sddc_manager_ip))
