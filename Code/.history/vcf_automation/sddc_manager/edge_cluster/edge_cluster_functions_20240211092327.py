@@ -26,7 +26,6 @@ def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_pa
 def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):
     '''
     This function returns the id of an edge cluster in SDDC Manager
-    by edge cluster name
     '''
     url = f"https://{sddc_manager_ip}/v1/edge-clusters"
     headers = {
