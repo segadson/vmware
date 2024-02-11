@@ -136,21 +136,3 @@ def get_aria_lifecycle_license_keys(arialifecycle_ip):
         raise SystemExit(f"No license keys found")
     
     return response.json()
-
-def get_aria_lifecycle_environment(aria_lifecycle_ip):
-    '''
-    This function returns the environment details for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/environments"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    if response.json() == None:
-        raise SystemExit(f"No environment found")
-    
-    return response.json()
