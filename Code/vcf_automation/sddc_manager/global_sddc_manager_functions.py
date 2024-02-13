@@ -20,9 +20,10 @@ def validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validati
     - storage
     - vcenter
     - nsx
-    - edge-cluster
+    - edge-clusters
     '''
     url = f"https://{sddc_manager_ip}/v1/{validation_type}/validations"
+
     headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -32,6 +33,8 @@ def validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validati
         response = requests.post(url, headers=headers, data=json.dumps(payload), verify=False)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
+    
+    print(response.text)
     return response.json()
 
 def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id):
@@ -58,6 +61,7 @@ def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_ty
         response = requests.get(url, headers=headers, verify=False)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
+    
     return response.json()
 
 def monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id):
