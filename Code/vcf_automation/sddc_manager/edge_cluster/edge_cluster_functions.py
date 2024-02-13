@@ -9,6 +9,17 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from sddc_manager.edge_cluster import create_edge_cluster_payload
+from global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
+from global_sddc_manager_functions import monitor_sddc_manager_task
+
+def validate_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_payload):
+    '''
+    This function validates an edge cluster in SDDC Manager
+    '''
+    validation_type = 'edge-cluster'
+    response = validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validation_type, edge_cluster_payload)
+    request_id = response['requestId']
+    monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id)
 
 def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_payload):
     '''
@@ -24,7 +35,8 @@ def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_pa
         response = requests.post(url, headers=headers, data=json.dumps(edge_cluster_payload), verify=False)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
-    return response.json()
+    request_id = response.json()['requestId']
+    monitor_sddc_manager_task(sddc_manager_ip, vcf_token, request_id)
 
 def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):
     '''

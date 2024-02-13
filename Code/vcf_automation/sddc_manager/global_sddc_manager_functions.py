@@ -8,6 +8,32 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+def validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validation_type, payload):
+    '''
+    This function validates a component in SDDC Manager
+    Validation types:
+    - sddc
+    - workloadDomain
+    - host
+    - cluster
+    - avn
+    - storage
+    - vcenter
+    - nsx
+    - edge-cluster
+    '''
+    url = f"https://{sddc_manager_ip}/v1/{validation_type}/validations"
+    headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': f'Bearer {vcf_token}'
+      }
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(payload), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    return response.json()
+
 def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id):
     '''
     This function returns the validation status of SDDC Manager Component in VCF
@@ -33,6 +59,28 @@ def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_ty
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     return response.json()
+
+def monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id):
+    '''
+    This function monitors the status of a validation in SDDC Manager
+    Validation types:
+    - sddc
+    - workloadDomain
+    - host
+    - cluster
+    - avn
+    - storage
+    - vcenter
+    - nsx
+    - edge-cluster
+    '''
+    validation_status = get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id)
+    while validation_status['status'] == 'IN_PROGRESS':
+        validation_status = get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id)
+    if validation_status['status'] == 'FAILED':
+        raise SystemExit(f"Validation {request_id} failed with error: {validation_status['error']['message']}")
+    return validation_status
+
 
 def get_sddc_manager_task_status(sddc_manager_ip, vcf_token, task_id):
     '''
