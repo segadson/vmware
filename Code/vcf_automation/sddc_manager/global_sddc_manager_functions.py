@@ -3,6 +3,7 @@ sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
 
 import requests
 import json
+import time
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -35,6 +36,8 @@ def validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validati
         raise SystemExit(e)
     
     print(json.dumps(response.json(), indent=4))
+
+
     return response.json()
 
 def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id):
@@ -82,6 +85,7 @@ def monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type,
     validation_status = get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id)
     while validation_status['executionStatus'] == 'IN_PROGRESS':
         validation_status = get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id)
+        time.sleep(15)
     if validation_status['executionStatus'] == 'FAILED':
         raise SystemExit(f"Validation {request_id} failed with error: {validation_status['error']['message']}")
     return validation_status
@@ -110,6 +114,7 @@ def monitor_sddc_manager_task(sddc_manager_ip, vcf_token, task_id):
     task_status = get_sddc_manager_task_status(sddc_manager_ip, vcf_token, task_id)
     while task_status['executionStatus'] == 'IN_PROGRESS':
         task_status = get_sddc_manager_task_status(sddc_manager_ip, vcf_token, task_id)
+        time.sleep(15)
     if task_status['executionStatus'] == 'FAILED':
         raise SystemExit(f"Task {task_id} failed with error: {task_status['error']['message']}")
     return task_status

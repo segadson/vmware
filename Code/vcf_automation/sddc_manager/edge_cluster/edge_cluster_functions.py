@@ -18,7 +18,7 @@ def validate_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_payload):
     '''
     validation_type = 'edge-clusters'
     response = validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validation_type, edge_cluster_payload)
-    request_id = response['requestId']
+    request_id = response['id']
     monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id)
 
 def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_payload):
