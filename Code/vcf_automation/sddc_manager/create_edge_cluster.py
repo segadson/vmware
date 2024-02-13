@@ -1,8 +1,7 @@
 import sys
 sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
 
-from create_edge_cluster_payload import create_edge_cluster_payload
-from edge_cluster_functions import create_edge_cluster_payload, validate_edge_cluster, create_sddc_manager_edge_cluster
+from edge_cluster.edge_cluster_functions import create_edge_cluster_payload, validate_edge_cluster, create_sddc_manager_edge_cluster
 from authentication.get_authentication_token import get_vcf_token
 from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
 

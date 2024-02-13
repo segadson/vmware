@@ -9,8 +9,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from sddc_manager.edge_cluster import create_edge_cluster_payload
-from global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
-from global_sddc_manager_functions import monitor_sddc_manager_task
+from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
+from sddc_manager.global_sddc_manager_functions import monitor_sddc_manager_task
 
 def validate_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_payload):
     '''
