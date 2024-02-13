@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
+
 from create_edge_cluster_payload import create_edge_cluster_payload
 from edge_cluster_functions import validate_edge_cluster, create_edge_cluster
 from authentication.get_authentication_token import get_vcf_token

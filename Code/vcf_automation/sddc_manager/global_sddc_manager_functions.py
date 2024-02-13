@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
+
 import requests
 import json
 from requests.exceptions import RequestException
