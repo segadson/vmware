@@ -262,7 +262,7 @@ def create_aria_lifecycle_certificate(aria_lifecycle_ip,alias, hostnames, ip_add
     
     return response.json()
 
-def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain, passphrase, private_key):
+def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificate, private_key):
     '''
     This function imports a certificate for Aria Lifecycle
     '''
@@ -271,9 +271,8 @@ def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain,
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
     payload = json.dumps({
-    "certificateChain": certificat_chain,
-    "privateKey": private_key,
-    "passphrase": passphrase
+    "certificate": certificate,
+    "privateKey": private_key
     })
 
     try:
@@ -282,25 +281,3 @@ def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain,
         raise SystemExit(e)
     
     return response.json()
-
-def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
-    '''
-    This function returns the certificate for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/locker/api/v2/certificates/"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    for item in response.json()['certificates']:
-        if item['alias'] == alias:
-            certificate =  item
-
-    if certificate == None:
-        raise SystemExit(f"Certificate {alias} not found")
-    
-    return certificate

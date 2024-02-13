@@ -296,7 +296,7 @@ def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     
-    for item in response.json()['certificates']:
+    for item in response.json():
         if item['alias'] == alias:
             certificate =  item
 

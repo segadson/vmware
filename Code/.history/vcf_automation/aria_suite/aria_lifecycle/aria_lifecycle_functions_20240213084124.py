@@ -180,7 +180,7 @@ def get_aria_lifecycle_environment(aria_lifecycle_ip):
 #########################################################
 # Create License Keys
 #########################################################
-def create_aria_lifecycle_license_keys(aria_lifecycle_ip,license_key_alias, license_key):
+def create_aria_lifecycle_license_keys(aria_lifecycle_ip,license_key_alias):
     '''
     This function creates a license key for Aria Lifecycle
     '''
@@ -190,7 +190,7 @@ def create_aria_lifecycle_license_keys(aria_lifecycle_ip,license_key_alias, lice
 
     payload = json.dumps({
     "alias": license_key_alias,
-    "serialKey": license_key,
+    "serialKey": "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX",
     "tenant": ""
     })
 
@@ -261,46 +261,3 @@ def create_aria_lifecycle_certificate(aria_lifecycle_ip,alias, hostnames, ip_add
         raise SystemExit(e)
     
     return response.json()
-
-def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain, passphrase, private_key):
-    '''
-    This function imports a certificate for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/locker/api/v2/certificates/import"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    payload = json.dumps({
-    "certificateChain": certificat_chain,
-    "privateKey": private_key,
-    "passphrase": passphrase
-    })
-
-    try:
-        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    return response.json()
-
-def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
-    '''
-    This function returns the certificate for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/locker/api/v2/certificates/"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    for item in response.json()['certificates']:
-        if item['alias'] == alias:
-            certificate =  item
-
-    if certificate == None:
-        raise SystemExit(f"Certificate {alias} not found")
-    
-    return certificate

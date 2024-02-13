@@ -282,25 +282,3 @@ def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain,
         raise SystemExit(e)
     
     return response.json()
-
-def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
-    '''
-    This function returns the certificate for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/locker/api/v2/certificates/"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    for item in response.json()['certificates']:
-        if item['alias'] == alias:
-            certificate =  item
-
-    if certificate == None:
-        raise SystemExit(f"Certificate {alias} not found")
-    
-    return certificate
