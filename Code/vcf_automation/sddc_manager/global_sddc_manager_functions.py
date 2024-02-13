@@ -34,7 +34,7 @@ def validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, validati
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     
-    print(response.text)
+    print(json.dumps(response.json(), indent=4))
     return response.json()
 
 def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_type, request_id):
@@ -62,6 +62,7 @@ def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_ty
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     
+    print(json.dumps(response.json(), indent=4))
     return response.json()
 
 def monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id):
