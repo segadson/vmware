@@ -180,6 +180,26 @@ def get_aria_lifecycle_environment(aria_lifecycle_ip):
 #########################################################
 # Create License Keys
 #########################################################
+def create_aria_lifecycle_license_keys(aria_lifecycle_ip,license_key_alias):
+    '''
+    This function creates a license key for Aria Lifecycle
+    '''
+    url = f"https://{aria_lifecycle_ip}/lcm/locker/api/v2/license/validate-and-add"
+
+    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+
+    payload = json.dumps({
+    "alias": license_key_alias,
+    "licenseKey": "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX",
+    "licenseKeyDescription": f"This license key is being used for {license_key_alias}"
+    })
+
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    
+    return response.json()
 
 #########################################################
 # Create Certificates
