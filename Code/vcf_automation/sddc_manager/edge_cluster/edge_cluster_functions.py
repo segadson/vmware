@@ -35,7 +35,7 @@ def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_pa
         response = requests.post(url, headers=headers, data=json.dumps(edge_cluster_payload), verify=False)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
-    request_id = response.json()['requestId']
+    request_id = response.json()['id']
     monitor_sddc_manager_task(sddc_manager_ip, vcf_token, request_id)
 
 def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):

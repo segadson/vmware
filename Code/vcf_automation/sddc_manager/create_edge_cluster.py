@@ -97,7 +97,7 @@ def create_edge_cluster_on_domain(sddc_manager_ip, domain_cluster_name):
     validate_edge_cluster(sddc_manager_ip, vcf_token, payload)
 
     # Call the SDDC Manager API to Create the edge cluster
-    #create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, payload)
+    create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, payload)
 
     #return modified_data
 
