@@ -92,7 +92,7 @@ def create_edge_cluster_on_domain(sddc_manager_ip, domain_cluster_name):
     vcf_token = get_vcf_token()
 
     payload = create_edge_cluster_payload(sddc_manager_ip, vcf_token, domain_cluster_name)
-    print(json.dumps(payload, indent=2))
+
     # Call the SDDC Manager API to Validate the edge cluster
     validate_edge_cluster(sddc_manager_ip, vcf_token, payload)
 
