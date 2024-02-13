@@ -16,75 +16,66 @@ def create_edge_cluster_payload(sdd_manger_ip, vcf_token, domain_cluster_name):
         raise SystemExit(f"Cluster {domain_cluster_name} not found in SDDC Manager")
     
     payload = {
-                "edgeClusterName":"WLD01-EC01",
-                "edgeClusterType":"NSX-T",
-                "edgeRootPassword":"VMware1!VMware1!",
-                "edgeAdminPassword":"VMware1!VMware1!",
-                "edgeAuditPassword":"VMware1!VMware1!",
-                "edgeFormFactor":"MEDIUM",
-                "tier0ServicesHighAvailability":"ACTIVE_ACTIVE",
-                "mtu":9000,
-                "asn":65005,
-                "edgeNodeSpecs":[
-                    {
-                        "edgeNodeName":"wld-edge01.vstellar.local",
-                        "managementIP":"172.16.10.115/24",
-                        "managementGateway":"172.16.10.1",
-                        "edgeTepGateway":"172.16.70.1",
-                        "edgeTep1IP":"172.16.70.11/24",
-                        "edgeTep2IP":"172.16.70.12/24",
-                        "edgeTepVlan":700,
-                        "clusterId":cluster_id,
-                        "interRackCluster":False,
-                        "uplinkNetwork":[
-                            {
-                            "uplinkVlan":500,
-                            "uplinkInterfaceIP":"172.16.50.10/24",
-                            "peerIP":"172.16.50.1/24",
-                            "asnPeer":65001,
-                            "bgpPeerPassword":"VMware1!"
-                            },
-                            {
-                            "uplinkVlan":600,
-                            "uplinkInterfaceIP":"172.16.60.10/24",
-                            "peerIP":"172.16.60.1/24",
-                            "asnPeer":65001,
-                            "bgpPeerPassword":"VMware1!"
-                            }
-                        ]
-                    },
-                    {
-                        "edgeNodeName":"wld-edge02.vstellar.local",
-                        "managementIP":"172.16.10.116/24",
-                        "managementGateway":"172.16.10.1",
-                        "edgeTepGateway":"172.16.70.1",
-                        "edgeTep1IP":"172.16.70.13/24",
-                        "edgeTep2IP":"172.16.70.14/24",
-                        "edgeTepVlan":700,
-                        "clusterId":"81bc0275-1a09-455d-91fd-3fce591cf500",
-                        "interRackCluster":False,
-                        "uplinkNetwork":[
-                            {
-                            "uplinkVlan":500,
-                            "uplinkInterfaceIP":"172.16.50.11/24",
-                            "peerIP":"172.16.50.1/24",
-                            "asnPeer":65001,
-                            "bgpPeerPassword":"VMware1!"
-                            },
-                            {
-                            "uplinkVlan":600,
-                            "uplinkInterfaceIP":"172.16.60.11/24",
-                            "peerIP":"172.16.60.1/24",
-                            "asnPeer":65001,
-                            "bgpPeerPassword":"VMware1!"
-                            }
-                        ]
-                    }
-                ],
-                "tier0RoutingType":"EBGP",
-                "tier0Name":"WLD01-T0",
-                "tier1Name":"WLD01-T1",
-                "edgeClusterProfileType":"DEFAULT"
-                }
+    "asn": 65003,
+    "edgeAdminPassword": "VMware123!VMware123!",
+    "edgeAuditPassword": "VMware123!VMware123!",
+    "edgeRootPassword": "VMware123!VMware123!",
+    "mtu": 8940,
+    "tier0Name": "VLC-Tier-0",
+    "tier0RoutingType": "EBGP",
+    "tier0ServicesHighAvailability": "ACTIVE_ACTIVE",
+    "tier1Name": "VLC-Tier-1",
+    "edgeClusterName": "EC-01",
+    "edgeClusterProfileType": "DEFAULT",
+    "edgeClusterType": "NSX-T",
+    "edgeFormFactor": "LARGE",
+    "edgeNodeSpecs": [ {
+        "clusterId": "",
+        "edgeNodeName": "edge1-mgmt.vcf.sddc.lab",
+        "edgeTep1IP": "172.27.13.2/24",
+        "edgeTep2IP": "172.27.13.3/24",
+        "edgeTepGateway": "172.27.13.1",
+        "edgeTepVlan": 13,
+        "interRackCluster": false,
+        "managementGateway": "10.0.0.221",
+        "managementIP": "10.0.0.23/24",
+        "uplinkNetwork": [ {
+            "asnPeer": 65001,
+            "bgpPeerPassword": "VMware123!",
+            "peerIP": "172.27.11.1/24",
+            "uplinkInterfaceIP": "172.27.11.2/24",
+            "uplinkVlan": 11
+        },{
+            "asnPeer": 65001,
+            "bgpPeerPassword": "VMware123!",
+            "peerIP": "172.27.12.1/24",
+            "uplinkInterfaceIP": "172.27.12.2/24",
+            "uplinkVlan": 12
+        } ]
+    },{
+        "clusterId": cluster_id,
+        "edgeNodeName": "edge2-mgmt.vcf.sddc.lab",
+        "edgeTep1IP": "172.27.13.4/24",
+        "edgeTep2IP": "172.27.13.5/24",
+        "edgeTepGateway": "172.27.13.1",
+        "edgeTepVlan": 13,
+        "interRackCluster": False,
+        "managementGateway": "10.0.0.221",
+        "managementIP": "10.0.0.24/24",
+        "uplinkNetwork": [ {
+            "asnPeer": 65001,
+            "bgpPeerPassword": "VMware123!",
+            "peerIP": "172.27.11.1/24",
+            "uplinkInterfaceIP": "172.27.11.3/24",
+            "uplinkVlan": 11
+        },{
+            "asnPeer": 65001,
+            "bgpPeerPassword": "VMware123!",
+            "peerIP": "172.27.12.1/24",
+            "uplinkInterfaceIP": "172.27.12.3/24",
+            "uplinkVlan": 12
+        } ]
+    } ]
+}
 
     return payload
