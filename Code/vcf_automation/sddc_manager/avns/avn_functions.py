@@ -10,7 +10,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 from sddc_manager.edge_cluster.edge_cluster_functions import get_edge_cluster_id
-from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
+from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation, monitor_sddc_manager_task
 
 def create_avn_payload(sddc_manager_ip, vcf_token, edge_cluster_name, *args, **kwargs):
     '''
@@ -20,24 +20,24 @@ def create_avn_payload(sddc_manager_ip, vcf_token, edge_cluster_name, *args, **k
     edge_cluster_id = get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name)
 
     payload = {
-        "edgeClusterId" : edge_cluster_id,
-        "avns" : [ {
-            "name" : "sfo-m01-seg01",
-            "regionType" : "REGION_A",
-            "subnet" : "192.168.20.0",
-            "subnetMask" : "255.255.255.0",
-            "gateway" : "192.168.20.1",
-            "mtu" : 9000,
-            "routerName" : "sfo-m01-seg01-t0-gw01"
-        }, {
-            "name" : "xreg-m01-seg01",
-            "regionType" : "X_REGION",
-            "subnet" : "192.168.30.0",
-            "subnetMask" : "255.255.255.0",
-            "gateway" : "192.168.30.1",
-            "mtu" : 9000,
-            "routerName" : "xreg-m01-seg01-t0-gw01"
-        } ]
+            "avns": [ {
+                "gateway": "10.50.0.1",
+                "mtu": 8940,
+                "name": "region-seg01",
+                "regionType": "REGION_A",
+                "routerName": "VLC-Tier-1",
+                "subnet": "10.50.0.0",
+                "subnetMask": "255.255.255.0"
+            }, {
+                "gateway": "10.60.0.1",
+                "mtu": 8940,
+                "name": "xregion-seg01",
+                "regionType": "X_REGION",
+                "routerName": "VLC-Tier-1",
+                "subnet": "10.60.0.0",
+                "subnetMask": "255.255.255.0"
+            }],
+            "edgeClusterId": edge_cluster_id
         }
     
     return payload
@@ -56,6 +56,12 @@ def create_avns(sddc_manager_ip, vcf_token, avn_payload):
         response = requests.post(url, headers=headers, data=json.dumps(avn_payload), verify=False)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
+    
+    request_id = response.json()['id']
+    monitor_sddc_manager_task(sddc_manager_ip, vcf_token, request_id)
+
+    #To Do: Add validation for AVN creation
+
     return response.json()
 
 def validate_avn_creation(sddc_manager_ip, vcf_token, avn_payload):

@@ -112,6 +112,7 @@ def monitor_sddc_manager_task(sddc_manager_ip, vcf_token, task_id):
     This function monitors the status of a task in SDDC Manager
     '''
     task_status = get_sddc_manager_task_status(sddc_manager_ip, vcf_token, task_id)
+    print(json.dumps(task_status, indent=4))
     while task_status['executionStatus'] == 'IN_PROGRESS':
         task_status = get_sddc_manager_task_status(sddc_manager_ip, vcf_token, task_id)
         time.sleep(15)

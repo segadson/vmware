@@ -18,8 +18,8 @@ def create_sddc_manager_avns (sddc_manager_ip, edge_cluster_name):
     #Validate AVN
     validate_avn_creation(sddc_manager_ip, vcf_token, payload)
 
-    # #Create AVN
-    # create_avns(sddc_manager_ip, vcf_token, payload)
+    #Create AVN
+    create_avns(sddc_manager_ip, vcf_token, payload)
     
 def main():
     sddc_manager_ip = 'sddc-manager.vcf.sddc.lab'
