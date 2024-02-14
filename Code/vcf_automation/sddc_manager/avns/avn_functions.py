@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
+
 import requests
 import json
 from requests.exceptions import RequestException
@@ -6,7 +9,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-from sddc_manager.edge_cluster import get_edge_cluster_id
+from sddc_manager.edge_cluster.edge_cluster_functions import get_edge_cluster_id
 
 def create_avn_payload(edge_cluster_name, *args, **kwargs):
     '''
