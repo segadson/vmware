@@ -10,13 +10,14 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 from sddc_manager.edge_cluster.edge_cluster_functions import get_edge_cluster_id
+from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
 
-def create_avn_payload(edge_cluster_name, *args, **kwargs):
+def create_avn_payload(sddc_manager_ip, vcf_token, edge_cluster_name, *args, **kwargs):
     '''
     This function creates the payload for AVN creation in SDDC Manager
     
     '''
-    edge_cluster_id = get_edge_cluster_id(edge_cluster_name)
+    edge_cluster_id = get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name)
 
     payload = {
         "edgeClusterId" : edge_cluster_id,
@@ -56,6 +57,14 @@ def create_avns(sddc_manager_ip, vcf_token, avn_payload):
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     return response.json()
+
+def validate_avn_creation(sddc_manager_ip, vcf_token, avn_payload):
+    '''
+    This function validates the creation of AVNs in SDDC Manager
+    '''
+    response = validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, "avns", avn_payload)
+    request_id = response['id']
+    monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, "avns", request_id)
 
 def get_avn_id(sddc_manager_ip, vcf_token, avn_type, network_name):
     '''
