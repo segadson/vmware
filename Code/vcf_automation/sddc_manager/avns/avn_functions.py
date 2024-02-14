@@ -64,8 +64,14 @@ def validate_avn_creation(sddc_manager_ip, vcf_token, avn_payload):
     '''
     response = validate_sddc_manager_component_request(sddc_manager_ip, vcf_token, "avns", avn_payload)
     request_id = response['id']
-    monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, "avns", request_id)
+    resultStatus = response['resultStatus']
+    executionStatus = response['executionStatus']
 
+    if resultStatus == 'SUCCEEDED' and executionStatus == 'COMPLETED':
+        print(f"AVN creation validation for {avn_payload['edgeClusterId']} completed successfully")
+    else:
+        raise SystemExit(f"AVN creation validation for {avn_payload['edgeClusterId']} failed")
+    
 def get_avn_id(sddc_manager_ip, vcf_token, avn_type, network_name):
     '''
     This function returns the id of an AVN in SDDC Manager

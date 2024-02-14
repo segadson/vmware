@@ -15,8 +15,8 @@ def create_sddc_manager_avns (sddc_manager_ip, edge_cluster_name):
     #Create AVN Payload
     payload = create_avn_payload(sddc_manager_ip, vcf_token, edge_cluster_name)
 
-    # #Validate AVN
-    # validate_avn_creation(sddc_manager_ip, vcf_token, payload)
+    #Validate AVN
+    validate_avn_creation(sddc_manager_ip, vcf_token, payload)
 
     # #Create AVN
     # create_avns(sddc_manager_ip, vcf_token, payload)
