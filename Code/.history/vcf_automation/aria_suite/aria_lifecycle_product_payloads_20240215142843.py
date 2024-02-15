@@ -512,7 +512,7 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
 
 #     return product_payload
 
-def create_aria_automation_payload(locker_certificate, locker_password, locker_license, aria_automation, clusterVips, *args, **kwargs):
+def create_aria_automation_payload(*args, **kwargs):
     '''
     This function creates the payload for Workspace ONE deployment in SDDC Manager
     Arguments:
@@ -529,9 +529,8 @@ def create_aria_automation_payload(locker_certificate, locker_password, locker_l
       }
     
     #Nodes
-    node_array = []
     for node in aria_automation['nodes']:
-        node_object = {
+        nodes = {
             "type": node['type'],
             "properties": {
                 "hostname": node['name'],
@@ -539,16 +538,14 @@ def create_aria_automation_payload(locker_certificate, locker_password, locker_l
                 "vmName": node['name']
             }
         }
-        node_array.append(node_object)
-
     payload = {
         "id": "vra",
-        "version": aria_automation['version'],
+        "version": "1.0.0",
         "properties": product_properties,
         "clusterVIP": {
             [clusterVips]
         },
-        "nodes": [node_array]
+        "nodes": [nodes]
     }
 
     product_payload = payload
@@ -566,103 +563,24 @@ def create_aria_automation_payload(locker_certificate, locker_password, locker_l
 
 #     return product_payload
 
-def create_aria_operations_payload(*args, **kwargs):
-    '''
-    This function creates the payload for Workspace ONE deployment in SDDC Manager
-    Arguments:
+# def create_aria_operations_payload(*args, **kwargs):
+#     '''
+#     This function creates the payload for Workspace ONE deployment in SDDC Manager
+#     Arguments:
 
-    '''
-    product_properties = {
-        "certificate": locker_certificate,
-        "productPassword": locker_password,
-        "licenseRef": locker_license,
-        "disableTls" : "",
-        "timeSyncMode": "ntp",
-        "masterVidmEnabled": False,
-        "ntp":"",
-        "affinityRule": False,
-        "configureAffinitySeparateAll": True,
-        "deployOption": "small",
-        "fipsMode": False, 
-        "vrliLogForwardingConfiguration": False,
-        "installSddcManagementPack": False,
-        "fileName": ""
-      }
-    
-    # Nodes
-    node_array = []
-    for node in aria_operations['nodes']:
-        node_object = {
-            "type": node['type'],
-            "properties": {
-                "hostname": node['name'],
-                "ipAddress": node['ipAddress'],
-                "vmName": node['name']
-            }
-        }
-        node_array.append(node_object)
-
-    # Create Cluster Group
-    collector_group = {
-        "operationType": "add",
-        "collectorGroups":[{
-            "name": "collector-group-1",
-            "nodes": [node_array]
-        }
-        ]
-    }
-
-    payload = {
-        "id": "vrops",
-        "version": aria_operations['version'],
-        "properties": product_properties,
-        "clusterVIP": {
-            [clusterVips]
-        },
-        "collectorGroups": collector_group,
-        "nodes": [node_array]
-    }
+#     '''
+#     payload = {}
 
 
 #     return product_payload
 
-def create_aria_operations_networks_payload(*args, **kwargs):
-    '''
-    This function creates the payload for Workspace ONE deployment in SDDC Manager
-    Arguments:
+# def create_aria_operations_networks_payload(*args, **kwargs):
+#     '''
+#     This function creates the payload for Workspace ONE deployment in SDDC Manager
+#     Arguments:
 
-    '''
-    product_properties = {
-        "certificate": locker_certificate,
-        "productPassword": locker_password,
-        "licenseRef": locker_license,
-        "fipsMode" : False,
-        "vrliLogForwardingConfiguration": False,
-        "monitorWithvROps": False
-      }
-    
-    # Nodes
-    node_array = []
-    for node in aria_operations_network['nodes']:
-        node_object = {
-            "type": node['type'],
-            "properties": {
-                "hostname": node['name'],
-                "ipAddress": node['ipAddress'],
-                "vmName": node['name']
-            }
-        }
-        node_array.append(node_object)
-    
-    payload = {
-        "id": "vrni",
-        "version": aria_operations_network['version'],
-        "properties": product_properties,
-        "clusterVIP": {
-            [clusterVips]
-        },
-        "nodes": [node_array]
-    }
+#     '''
+#     payload = {}
 
 
 #     return product_payload

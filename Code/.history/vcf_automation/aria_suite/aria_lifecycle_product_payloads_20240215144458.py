@@ -540,7 +540,7 @@ def create_aria_automation_payload(locker_certificate, locker_password, locker_l
             }
         }
         node_array.append(node_object)
-
+        
     payload = {
         "id": "vra",
         "version": aria_automation['version'],
@@ -603,7 +603,7 @@ def create_aria_operations_payload(*args, **kwargs):
         node_array.append(node_object)
 
     # Create Cluster Group
-    collector_group = {
+    cluster_group = {
         "operationType": "add",
         "collectorGroups":[{
             "name": "collector-group-1",
@@ -612,57 +612,18 @@ def create_aria_operations_payload(*args, **kwargs):
         ]
     }
 
-    payload = {
-        "id": "vrops",
-        "version": aria_operations['version'],
-        "properties": product_properties,
-        "clusterVIP": {
-            [clusterVips]
-        },
-        "collectorGroups": collector_group,
-        "nodes": [node_array]
-    }
+    payload = {}
 
 
 #     return product_payload
 
-def create_aria_operations_networks_payload(*args, **kwargs):
-    '''
-    This function creates the payload for Workspace ONE deployment in SDDC Manager
-    Arguments:
+# def create_aria_operations_networks_payload(*args, **kwargs):
+#     '''
+#     This function creates the payload for Workspace ONE deployment in SDDC Manager
+#     Arguments:
 
-    '''
-    product_properties = {
-        "certificate": locker_certificate,
-        "productPassword": locker_password,
-        "licenseRef": locker_license,
-        "fipsMode" : False,
-        "vrliLogForwardingConfiguration": False,
-        "monitorWithvROps": False
-      }
-    
-    # Nodes
-    node_array = []
-    for node in aria_operations_network['nodes']:
-        node_object = {
-            "type": node['type'],
-            "properties": {
-                "hostname": node['name'],
-                "ipAddress": node['ipAddress'],
-                "vmName": node['name']
-            }
-        }
-        node_array.append(node_object)
-    
-    payload = {
-        "id": "vrni",
-        "version": aria_operations_network['version'],
-        "properties": product_properties,
-        "clusterVIP": {
-            [clusterVips]
-        },
-        "nodes": [node_array]
-    }
+#     '''
+#     payload = {}
 
 
 #     return product_payload
