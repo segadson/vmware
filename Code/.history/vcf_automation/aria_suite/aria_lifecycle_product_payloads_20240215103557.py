@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter, get
+from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
 from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
@@ -22,25 +22,22 @@ inputs = {
   "aria_lifecycle": {
     "hostname": "localhost",
     "ipAddress": "",
-    "deployment_datacenter": {
+    "data_centers": [
+      {
         "name": "Default-VC",
-        "primaryLocation": "Palo Alto;California;US;37.44188;-122.14302"
-    },
-    "deployment_vcenter":{
+        "primaryLocation": "Palo Alto;California;US;37.44188;-122.14302",
+        "vcenters": [
+          {
             "name": "Default-VC",
             "hostname": "bigdaddykingdom.seanlab.local",
             "username": "administrator@seanlab.local",
-            "password": "x9SyJnRR!"
-    },
-    "aria_enviorments":[
-        {
-            "name": "aria_enviornment_1",
+            "password": "x9SyJnRR!",
             "aria_suite_cluster": "Main-Cluster",
             "aria_suite_datastore": "Main-Datastore",
             "aria_suite_network": "Main-Network",
             "aria_suite_username": "admin",
             "aria_suite_password": "x9SyJnRR!",
-                        "products": {
+            "products": {
               "aria_automation": {
                 "version:": "1.0.0",
                 "clusterVIP": "",
@@ -143,10 +140,13 @@ inputs = {
                 ]
               }
             }
-        }
+          }
+        ]
+      }
     ]
   }
 }
+
 
 vcenter_ip = 'bigdaddykingdom.seanlab.local'
 vcenter_username = 'administrator@seanlab.local'
@@ -206,12 +206,9 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     
     ntp_settings = ','.join(ntp_settings_array)
 
-    #Creating Product Alias
     product_alias = f'{aria_product_type}_{target_vcenter_name}'
-
     #Create or Get Certificate
     #Create or Get License
-
     #Create or Get Locker Password
 
 

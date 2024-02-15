@@ -5,12 +5,13 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter, get
+from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
 from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
 from authentication.get_authentication_token import get_vcenter_token
 from vcenter.vcenter_functions import get_vcenter_resource_pool
+from aria_suite import inputs
 from sddc_manager.avns import *
 
 '''
@@ -18,135 +19,6 @@ if vcf is true
 for VCF Part:
 "{\"vcfEnabled\":true,\"sddcManagerDetails\":[{\"sddcManagerHostName\":\"sfo-vcf01.sfo.rainpole.io\",\"sddcManagerName\":\"default\",\"sddcManagerVmid\":\"default\"}]}"
 '''
-inputs = {
-  "aria_lifecycle": {
-    "hostname": "localhost",
-    "ipAddress": "",
-    "deployment_datacenter": {
-        "name": "Default-VC",
-        "primaryLocation": "Palo Alto;California;US;37.44188;-122.14302"
-    },
-    "deployment_vcenter":{
-            "name": "Default-VC",
-            "hostname": "bigdaddykingdom.seanlab.local",
-            "username": "administrator@seanlab.local",
-            "password": "x9SyJnRR!"
-    },
-    "aria_enviorments":[
-        {
-            "name": "aria_enviornment_1",
-            "aria_suite_cluster": "Main-Cluster",
-            "aria_suite_datastore": "Main-Datastore",
-            "aria_suite_network": "Main-Network",
-            "aria_suite_username": "admin",
-            "aria_suite_password": "x9SyJnRR!",
-                        "products": {
-              "aria_automation": {
-                "version:": "1.0.0",
-                "clusterVIP": "",
-                "collectorGroups": {
-                  "name": "collector-group-1",
-                  "operation": "add",
-                  "collectors": [
-                    {
-                      "type": "remotecollector",
-                      "name": "aria-suite-3",
-                      "ipAddress": "",
-                      "deployment_option": "smallrc"
-                    },
-                    {
-                      "type": "cloudproxy",
-                      "name": "aria-suite-4",
-                      "ipAddress": "",
-                      "deployment_option": "smallcp"
-                    }
-                  ]
-                },
-                "nodes": [
-                  {
-                    "type": "vrava-primary",
-                    "name": "aria-automation-1",
-                    "ipAddress": ""
-                  },
-                  {
-                    "type": "vrava-secondary",
-                    "name": "aria-automation-2",
-                    "ipAddress": ""
-                  },
-                  {
-                    "type": "vrava-secondary",
-                    "name": "aria-automation-3",
-                    "ipAddress": ""
-                  }
-                ]
-              },
-              "aria_operations": {
-                "version": "1.0.0",
-                "clusterVIP": "",
-                "nodes": [
-                  {
-                    "type": "master",
-                    "name": "aria-suite-1",
-                    "ipAddress": ""
-                  },
-                  {
-                    "type": "replica",
-                    "name": "aria-suite-2",
-                    "ipAddress": ""
-                  },
-                  {
-                    "type": "remotecollector",
-                    "name": "aria-suite-3",
-                    "ipAddress": "",
-                    "deployment_option": "smallrc"
-                  },
-                  {
-                    "type": "cloudproxy",
-                    "name": "aria-suite-4",
-                    "ipAddress": "",
-                    "deployment_option": "smallcp"
-                  }
-                ]
-              },
-              "aria_operations_network": {
-                "version": "1.0.0",
-                "clusterVIP": "",
-                "nodes": [
-                  {
-                    "type": "vrni-platform",
-                    "name": "aria-suite-1",
-                    "ipAddress": "",
-                    "vrni_node_size": "small"
-                  },
-                  {
-                    "type": "vrni-collector",
-                    "name": "aria-suite-2",
-                    "ipAddress": "",
-                    "vrni_node_size": "small"
-                  }
-                ]
-              },
-              "aria_operations_logs": {
-                "version": "1.0.0",
-                "clusterVIP": "",
-                "nodes": [
-                  {
-                    "type": "vrli-master",
-                    "name": "aria-suite-1",
-                    "ipAddress": ""
-                  },
-                  {
-                    "type": "vrli-worker",
-                    "name": "aria-suite-2",
-                    "ipAddress": ""
-                  }
-                ]
-              }
-            }
-        }
-    ]
-  }
-}
 
 vcenter_ip = 'bigdaddykingdom.seanlab.local'
 vcenter_username = 'administrator@seanlab.local'
@@ -155,9 +27,6 @@ aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 target_datacenter = 'Default-DC'
 target_vcenter_name = 'Default-VC'
 aria_lifecycle_email = 'sean.e.gadson@gmail.com'
-aria_product_type = 'aria_automation'
-
-
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
@@ -206,12 +75,8 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     
     ntp_settings = ','.join(ntp_settings_array)
 
-    #Creating Product Alias
-    product_alias = f'{aria_product_type}_{target_vcenter_name}'
-
     #Create or Get Certificate
     #Create or Get License
-
     #Create or Get Locker Password
 
 
