@@ -5,10 +5,10 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter
-from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns
-from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
-from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
+from aria_suite.aria_lifecycle_functions import get_aria_life_cycle_datacenter
+from aria_suite.aria_lifecycle_functions  import get_aria_lifecycle_dns
+from aria_suite.aria_lifecycle_functions  import get_aria_lifecycle_ntp
+from aria_suite.aria_lifecycle_functions import get_aria_lifecycle_datacenter_vcenter
 from authentication.get_authentication_token import get_vcenter_token
 from vcenter.vcenter_functions import get_vcenter_resource_pool
 from sddc_manager.avns import *
