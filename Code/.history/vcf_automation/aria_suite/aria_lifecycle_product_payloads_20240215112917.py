@@ -5,8 +5,8 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter, get_aria_lifecycle_certificate, create_aria_lifecycle_certificate,get_aria_lifecycle_license_keys_by_alias, create_aria_lifecycle_license_keys
-from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns, get_aria_lifecycle_locker_password, create_aria_lifecycle_locker_password
+from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter, get_aria_lifecycle_certificate
+from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
 from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
 from authentication.get_authentication_token import get_vcenter_token
@@ -40,7 +40,7 @@ inputs = {
             "aria_suite_network": "Main-Network",
             "aria_suite_username": "admin",
             "aria_suite_password": "x9SyJnRR!",
-            "products": {
+                        "products": {
               "aria_automation": {
                 "version:": "1.0.0",
                 "clusterVIP": "",
@@ -156,113 +156,7 @@ target_datacenter = 'Default-DC'
 target_vcenter_name = 'Default-VC'
 aria_lifecycle_email = 'sean.e.gadson@gmail.com'
 aria_enviornment_name = 'aria_enviornment_1'
-products_ = {
-  "aria_automation": {
-    "version:": "1.0.0",
-    "clusterVIP": "",
-    "collectorGroups": {
-      "name": "collector-group-1",
-      "operation": "add",
-      "collectors": [
-        {
-          "type": "remotecollector",
-          "name": "aria-suite-3",
-          "ipAddress": "",
-          "deployment_option": "smallrc"
-        },
-        {
-          "type": "cloudproxy",
-          "name": "aria-suite-4",
-          "ipAddress": "",
-          "deployment_option": "smallcp"
-        }
-      ]
-    },
-    "nodes": [
-      {
-        "type": "vrava-primary",
-        "name": "aria-automation-1",
-        "ipAddress": ""
-      },
-      {
-        "type": "vrava-secondary",
-        "name": "aria-automation-2",
-        "ipAddress": ""
-      },
-      {
-        "type": "vrava-secondary",
-        "name": "aria-automation-3",
-        "ipAddress": ""
-      }
-    ]
-  },
-  "aria_operations": {
-    "version": "1.0.0",
-    "clusterVIP": "",
-    "nodes": [
-      {
-        "type": "master",
-        "name": "aria-suite-1",
-        "ipAddress": ""
-      },
-      {
-        "type": "replica",
-        "name": "aria-suite-2",
-        "ipAddress": ""
-      },
-      {
-        "type": "remotecollector",
-        "name": "aria-suite-3",
-        "ipAddress": "",
-        "deployment_option": "smallrc"
-      },
-      {
-        "type": "cloudproxy",
-        "name": "aria-suite-4",
-        "ipAddress": "",
-        "deployment_option": "smallcp"
-      }
-    ]
-  },
-  "aria_operations_network": {
-    "version": "1.0.0",
-    "clusterVIP": "",
-    "nodes": [
-      {
-        "type": "vrni-platform",
-        "name": "aria-suite-1",
-        "ipAddress": "",
-        "vrni_node_size": "small"
-      },
-      {
-        "type": "vrni-collector",
-        "name": "aria-suite-2",
-        "ipAddress": "",
-        "vrni_node_size": "small"
-      }
-    ]
-  },
-  "aria_operations_logs": {
-    "version": "1.0.0",
-    "clusterVIP": "",
-    "nodes": [
-      {
-        "type": "vrli-master",
-        "name": "aria-suite-1",
-        "ipAddress": ""
-      },
-      {
-        "type": "vrli-worker",
-        "name": "aria-suite-2",
-        "ipAddress": ""
-      }
-    ]
-  }
-}
 
-license_key = '1234567890'
-locker_username = 'admin'
-locker_password = 'x9SyJnRR!'
 
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
@@ -311,131 +205,45 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         ntp_settings_array.append(item['hostname'])
     
     ntp_settings = ','.join(ntp_settings_array)
-    
-    products = products_
-
-    #Get Aira Automation Hostnames and IP Addresses
-    aria_automation_hostnames = []
-    aria_automation_ip_addresses = []
-   
-    aria_automation = products['aria_automation']
-    
-    aria_automation_cluster_vip = aria_automation['clusterVIP']
-
-    #Get Individual Cluster Nodes
-    for node in aria_automation['nodes']:
-        aria_automation_hostnames.append(node['name'])
-        aria_automation_ip_addresses.append(node['ipAddress'])
-
-    #Get Aira Operations Hostnames and IP Addresses
-    aria_operations_hostnames = []
-    aria_operations_ip_addresses = []
-    
-    aria_operations = products['aria_operations']
-    
-    aria_operations_cluster_vip = aria_operations['clusterVIP']
-                                                  
-    #Get Individual Cluster Nodes
-    for node in aria_operations['nodes']:
-        aria_operations_hostnames.append(node['name'])
-        aria_operations_ip_addresses.append(node['ipAddress'])
-
-    #Get Aira Operations Network Hostnames and IP Addresses
-    aria_operations_network_hostnames = []
-    aria_operations_network_ip_addresses = []
-    
-    aria_operations_network = products['aria_operations_network']
-    
-    aria_operations_network_cluster_vip = aria_operations_network['clusterVIP']
-
-    #Get Individual Cluster Nodes
-    for node in aria_operations_network['nodes']:
-        aria_operations_network_hostnames.append(node['name'])
-        aria_operations_network_ip_addresses.append(node['ipAddress'])
-
-    #Get Aira Operations Logs Hostnames and IP Addresses
-    aria_operations_logs_hostnames = []
-    aria_operations_logs_ip_addresses = []
-
-    aria_operations_logs = products['aria_operations_logs']
-    
-    aria_operations_logs_cluster_vip = aria_operations_logs['clusterVIP']
-
-    #Get Individual Cluster Nodes
-    for node in aria_operations_logs['nodes']:
-        aria_operations_logs_hostnames.append(node['name'])
-        aria_operations_logs_ip_addresses.append(node['ipAddress'])
-
-    #Get Hostnames and IP Addresses
-    hostnames = [aria_automation_hostnames, aria_operations_hostnames, aria_operations_network_hostnames, aria_operations_logs_hostnames, 
-                 aria_automation_cluster_vip, aria_operations_cluster_vip, aria_operations_network_cluster_vip, 
-                 aria_operations_logs_cluster_vip]
-    ip_addresses = [aria_automation_ip_addresses, aria_operations_ip_addresses, aria_operations_network_ip_addresses, aria_operations_logs_ip_addresses,
-                    aria_automation_cluster_vip, aria_operations_cluster_vip, 
-                    aria_operations_network_cluster_vip, 
-                    aria_operations_logs_cluster_vip]
 
     #Creating Product Alias
     product_alias = f'{aria_enviornment_name}'
 
     #Create or Get Certificate
-    certificate = get_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias)
-
-    if certificate is None:
-        print('Certificate not found, creating certificate')
-        
-    certificate = create_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias, hostnames, ip_addresses)
-    locker_certificate = f'locker:certificate:{certificate["vmid"]}:{product_alias}'
+    certificate = get
     #Create or Get License
-    license = get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip, product_alias)
-
-    if license is None:
-        print('License not found, creating license')
-    
-    license = create_aria_lifecycle_license_keys(aria_lifecycle_ip, product_alias, license_key)
-    locker_license = f'locker:license:{license["vmid"]}:{product_alias}'
 
     #Create or Get Locker Password
-    password = get_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias)
 
-    if password is None:
-        print('Password not found, creating password')
-    
-    password = create_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias, locker_username ,locker_password)
-
-    locker_password = f'locker:password:{password["vmid"]}:{product_alias}'
 
     environment_details = {
-        "license": locker_license,
-        "environment_details_payload"  : {
-        "dataCenterVmid": target_datacenter_vmiid,
-        "regionName": "default",
-        "zoneName": "default",
-        "vCenterName": target_vcenter_name,
-        "vCenterHost": target_vcenter_name,
-        "vcUsername": target_vcenter_username,
-        "vcPassword": target_vcenter_password,
-        "acceptEULA": True,
-        "enableTelemetry": True,
-        "adminEmail": aria_lifecycle_email,
-        "defaultPassword": locker_password,
-        "certificate": locker_certificate,
-        "cluster": "Datacenter#Cluster-01",
-        "storage": "ISCSI-15TB-04",
-        "folderName": "",
-        "resourcePool": "",
-        "diskMode": "thin",
-        "network": "infra-traffic-1024",
-        "masterVidmEnabled": "false",
-        "dns": "10.141.66.213,10.118.183.252",
-        "domain": "sqa.local",
-        "gateway": "10.196.57.253",
-        "netmask": "255.255.254.0",
-        "searchpath": "sqa.local",
-        "timeSyncMode": "host",
-        "ntp": "",
-        "isDhcp": "false"
-        }
+      "dataCenterVmid": target_datacenter_vmiid,
+      "regionName": "default",
+      "zoneName": "default",
+      "vCenterName": target_vcenter_name,
+      "vCenterHost": target_vcenter_name,
+      "vcUsername": target_vcenter_username,
+      "vcPassword": target_vcenter_password,
+      "acceptEULA": True,
+      "enableTelemetry": True,
+      "adminEmail": aria_lifecycle_email,
+      "defaultPassword": "locker:password:81fb2ee9c5bb:VMware1!",
+      "certificate": "locker:certificate:49b8ff35b0a:vm",
+      "cluster": "Datacenter#Cluster-01",
+      "storage": "ISCSI-15TB-04",
+      "folderName": "",
+      "resourcePool": "",
+      "diskMode": "thin",
+      "network": "infra-traffic-1024",
+      "masterVidmEnabled": "false",
+      "dns": "10.141.66.213,10.118.183.252",
+      "domain": "sqa.local",
+      "gateway": "10.196.57.253",
+      "netmask": "255.255.254.0",
+      "searchpath": "sqa.local",
+      "timeSyncMode": "host",
+      "ntp": "",
+      "isDhcp": "false"
     }
     
 

@@ -403,7 +403,6 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     
     password = create_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias, locker_username ,locker_password)
 
-    locker_password = f'locker:password:{password["vmid"]}:{product_alias}'
 
     environment_details = {
         "license": locker_license,
@@ -418,7 +417,7 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         "acceptEULA": True,
         "enableTelemetry": True,
         "adminEmail": aria_lifecycle_email,
-        "defaultPassword": locker_password,
+        "defaultPassword": "locker:password:81fb2ee9c5bb:VMware1!",
         "certificate": locker_certificate,
         "cluster": "Datacenter#Cluster-01",
         "storage": "ISCSI-15TB-04",

@@ -6,7 +6,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cycle_datacenter, get_aria_lifecycle_certificate, create_aria_lifecycle_certificate,get_aria_lifecycle_license_keys_by_alias, create_aria_lifecycle_license_keys
-from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns, get_aria_lifecycle_locker_password, create_aria_lifecycle_locker_password
+from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
 from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
 from authentication.get_authentication_token import get_vcenter_token
@@ -261,8 +261,6 @@ products_ = {
 }
 
 license_key = '1234567890'
-locker_username = 'admin'
-locker_password = 'x9SyJnRR!'
 
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
@@ -396,14 +394,7 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     locker_license = f'locker:license:{license["vmid"]}:{product_alias}'
 
     #Create or Get Locker Password
-    password = get_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias)
 
-    if password is None:
-        print('Password not found, creating password')
-    
-    password = create_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias, locker_username ,locker_password)
-
-    locker_password = f'locker:password:{password["vmid"]}:{product_alias}'
 
     environment_details = {
         "license": locker_license,
@@ -418,7 +409,7 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         "acceptEULA": True,
         "enableTelemetry": True,
         "adminEmail": aria_lifecycle_email,
-        "defaultPassword": locker_password,
+        "defaultPassword": "locker:password:81fb2ee9c5bb:VMware1!",
         "certificate": locker_certificate,
         "cluster": "Datacenter#Cluster-01",
         "storage": "ISCSI-15TB-04",
