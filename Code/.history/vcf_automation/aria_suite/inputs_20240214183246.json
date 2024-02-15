@@ -1,0 +1,49 @@
+{
+    "aria_lifecycle":{
+        "hostname":"localhost",
+        "ipAddress":"",
+        "data_centers":[{
+            "name":"Default-VC",
+            "primaryLocation":"Palo Alto;California;US;37.44188;-122.14302",
+            "vcenters":[{
+                "name":"Default-VC",
+                "hostname":"bigdaddykingdom.seanlab.local",
+                "username":"administrator@seanlab.local",
+                "password":"x9SyJnRR!",
+                "aria_suite_cluster":"Main-Cluster",
+                "aria_suite_datastore":"Main-Datastore",
+                "aria_suite_products":[
+                    {
+                    "name":"vRealize Operations",
+                    "version":"8.1",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Log Insight",
+                    "version":"8.1",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Automation",
+                    "version":"8.1",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Suite Lifecycle Manager",
+                    "version":"8.1",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Network Insight",
+                    "version":"5.2",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Suite Lifecycle Manager",
+                    "version":"8.1",
+                    "build":"16620007"
+                },{
+                    "name":"vRealize Suite Lifecycle Manager",
+                    "version":"8.1",
+                    "build":"16620007"
+                }]
+
+        }]
+    }]
+}
+}

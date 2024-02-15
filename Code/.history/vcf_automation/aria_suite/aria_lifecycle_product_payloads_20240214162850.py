@@ -8,7 +8,6 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from aria_lifecycle_functions import get_aria_life_cycle_datacenter
 from aria_lifecycle_functions  import get_aria_lifecycle_dns
 from aria_lifecycle_functions  import get_aria_lifecycle_ntp
-from aria_lifecycle_functions import get_aria_lifecycle_datacenter_vcenter
 from authentication.get_authentication_token import get_vcenter_token
 from vcenter.vcenter_functions import get_vcenter_resource_pool
 from sddc_manager.avns import *
@@ -24,8 +23,6 @@ vcenter_username = 'administrator@seanlab.local'
 vcenter_password = 'x9SyJnRR!'
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 target_datacenter = 'Default-DC'
-target_vcenter_name = 'Default-VC'
-
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
@@ -37,8 +34,15 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     vcenter_token = get_vcenter_token(vcenter_ip, vcenter_username, vcenter_password)
     #sddc_manager_token = get_vcf_token(sddc_manager_ip, sddc_manager_username, sddc_manager_password)
 
-    #Get Aria Lifecycle Datacenter vCenter Details
-    target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name)
+    # Get Managment Datacenter
+    data_center = get_aria_life_cycle_datacenter(aria_lifecycle_ip, target_datacenter)
+
+    for item in data_center['vCDatacenters']:
+        if item['vCDatacenterName'] == target_vcenter_name:
+            target_vcenter = item
+            break
+    if target_vcenter is None:
+        raise Exception('Target vCenter not found')
     
     for item in target_vcenter['clusters']:
         if item['clusterName'] == target_cluster_name:
