@@ -25,7 +25,7 @@ vcenter_password = 'x9SyJnRR!'
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 target_datacenter = 'Default-DC'
 target_vcenter_name = 'Default-VC'
-aria_lifecycle_email = 'sean.e.gadson@gmail.com'
+
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
@@ -37,13 +37,9 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     vcenter_token = get_vcenter_token(vcenter_ip, vcenter_username, vcenter_password)
     #sddc_manager_token = get_vcf_token(sddc_manager_ip, sddc_manager_username, sddc_manager_password)
     target_datacenter = get_aria_life_cycle_datacenter(aria_lifecycle_ip, target_datacenter)
-    target_datacenter_vmiid = target_datacenter['dataCenterVmid']
 
     #Get Aria Lifecycle Datacenter vCenter Details
     target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name)
-    target_vcenter_name = target_vcenter['vCenterHost']
-    target_vcenter_username = target_vcenter['vcUsername']
-    target_vcenter_password = target_vcenter['vcPassword']
     
     for item in target_vcenter['clusters']:
         if item['clusterName'] == target_cluster_name:
@@ -79,35 +75,7 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     #Create or Get Locker Password
 
 
-    environment_details = {
-      "dataCenterVmid": target_datacenter_vmiid,
-      "regionName": "default",
-      "zoneName": "default",
-      "vCenterName": target_vcenter_name,
-      "vCenterHost": target_vcenter_name,
-      "vcUsername": target_vcenter_username,
-      "vcPassword": target_vcenter_password,
-      "acceptEULA": True,
-      "enableTelemetry": True,
-      "adminEmail": aria_lifecycle_email,
-      "defaultPassword": "locker:password:81fb2ee9c5bb:VMware1!",
-      "certificate": "locker:certificate:49b8ff35b0a:vm",
-      "cluster": "Datacenter#Cluster-01",
-      "storage": "ISCSI-15TB-04",
-      "folderName": "",
-      "resourcePool": "",
-      "diskMode": "thin",
-      "network": "infra-traffic-1024",
-      "masterVidmEnabled": "false",
-      "dns": "10.141.66.213,10.118.183.252",
-      "domain": "sqa.local",
-      "gateway": "10.196.57.253",
-      "netmask": "255.255.254.0",
-      "searchpath": "sqa.local",
-      "timeSyncMode": "host",
-      "ntp": "",
-      "isDhcp": "false"
-    }
+    environment_details = {}
     
 
 

@@ -25,7 +25,7 @@ vcenter_password = 'x9SyJnRR!'
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 target_datacenter = 'Default-DC'
 target_vcenter_name = 'Default-VC'
-aria_lifecycle_email = 'sean.e.gadson@gmail.com'
+
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
@@ -87,9 +87,9 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
       "vCenterHost": target_vcenter_name,
       "vcUsername": target_vcenter_username,
       "vcPassword": target_vcenter_password,
-      "acceptEULA": True,
-      "enableTelemetry": True,
-      "adminEmail": aria_lifecycle_email,
+      "acceptEULA": "true",
+      "enableTelemetry": "true",
+      "adminEmail": "abc@vmware.com",
       "defaultPassword": "locker:password:81fb2ee9c5bb:VMware1!",
       "certificate": "locker:certificate:49b8ff35b0a:vm",
       "cluster": "Datacenter#Cluster-01",
