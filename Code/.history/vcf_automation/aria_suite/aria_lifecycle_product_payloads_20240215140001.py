@@ -161,7 +161,6 @@ vcenter_password = 'x9SyJnRR!'
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 target_datacenter = 'Default-DC'
 target_vcenter_name = 'Default-VC'
-target_cluster_name = 'Main-Cluster'
 aria_lifecycle_email = 'sean.e.gadson@gmail.com'
 aria_enviornment_name = 'aria_enviornment_1'
 products_ = {
@@ -271,8 +270,7 @@ products_ = {
 license_key = '1234567890'
 locker_username = 'admin'
 locker_password = 'x9SyJnRR!'
-aria_suite_datastore = 'management_domain_datastore'
-deployment_network_properties_ = {
+deployment_network_properties = {
                     "network_name": "VM Network",
                     "portgroup": "vlan1024",
                     "gateway": "192.168.1.1",
@@ -280,7 +278,6 @@ deployment_network_properties_ = {
                     "domain": "seanlab.local",
                     "searchpath": "seanlab.local"
                     }
-network = "VM Network"
 
 def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
@@ -309,24 +306,6 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         raise Exception('Target Cluster not found')
     
     cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
-
-    #Get Cluster Storage
-    for item in target_cluster['storages']:
-        if item['storageName'] == aria_suite_datastore:
-            cluster_datastore = item
-            break
-    if cluster_datastore is None:
-        raise Exception('Datastore not found')
-    
-    #Get Cluster Network Properties
-    cluster_network_properties = deployment_network_properties_
-     
-    for item in target_cluster['networks']:
-        if item['network'] == cluster_network_properties['network']:
-            network = item['network'] 
-            break
-    if network is None:
-        raise Exception('Network not found')
 
     #Get vCenter Resource Group
     vcenter_resource_group = get_vcenter_resource_pool(vcenter_ip, vcenter_token, cluster_name)
@@ -456,18 +435,18 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         "adminEmail": aria_lifecycle_email,
         "defaultPassword": locker_password,
         "certificate": locker_certificate,
-        "cluster": cluster_name,
-        "storage": cluster_datastore,
+        "cluster": "Datacenter#Cluster-01",
+        "storage": "ISCSI-15TB-04",
         "folderName": "",
         "resourcePool": "",
         "diskMode": "thin",
-        "network": network,
+        "network": "infra-traffic-1024",
         "masterVidmEnabled": "false",
         "dns": dns_string,
-        "domain": cluster_network_properties['domain'],
-        "gateway": cluster_network_properties['gateway'],
-        "netmask": cluster_network_properties['netmask'],
-        "searchpath": cluster_network_properties['searchpath'],
+        "domain": "sqa.local",
+        "gateway": "10.196.57.253",
+        "netmask": "255.255.254.0",
+        "searchpath": "sqa.local",
         "timeSyncMode": "host",
         "ntp": "",
         "isDhcp": "false"

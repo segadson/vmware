@@ -320,7 +320,8 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
     
     #Get Cluster Network Properties
     cluster_network_properties = deployment_network_properties_
-     
+    cluster_network_properties['network'] = network
+    
     for item in target_cluster['networks']:
         if item['network'] == cluster_network_properties['network']:
             network = item['network'] 
@@ -461,13 +462,13 @@ def get_aria_lifecycle_environment_details(*args, **kwargs):
         "folderName": "",
         "resourcePool": "",
         "diskMode": "thin",
-        "network": network,
+        "network": "infra-traffic-1024",
         "masterVidmEnabled": "false",
         "dns": dns_string,
-        "domain": cluster_network_properties['domain'],
-        "gateway": cluster_network_properties['gateway'],
-        "netmask": cluster_network_properties['netmask'],
-        "searchpath": cluster_network_properties['searchpath'],
+        "domain": "sqa.local",
+        "gateway": "10.196.57.253",
+        "netmask": "255.255.254.0",
+        "searchpath": "sqa.local",
         "timeSyncMode": "host",
         "ntp": "",
         "isDhcp": "false"
