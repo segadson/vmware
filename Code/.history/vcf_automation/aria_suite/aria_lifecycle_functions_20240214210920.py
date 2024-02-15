@@ -1,6 +1,5 @@
 import requests
 import json
-import time
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -421,16 +420,3 @@ def retry_aria_lifecycle_request(aria_lifecycle_ip, request_id):
         raise SystemExit(e)
     
     return response.json()
-
-def monitor_aria_lifecycle_request(aria_lifecycle_ip, request_id):
-    '''
-    This function monitors the request for Aria Lifecycle
-    '''
-    task_status = get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id)
-    while task_status['status'] == 'IN_PROGRESS':
-        task_status = get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id)
-        print(json.dumps(task_status, indent=4))
-        time.sleep(15)
-    if task_status['status'] == 'FAILED':
-        request_error = get_aria_lifecycle_request_errors(aria_lifecycle_ip, request_id)
-        raise SystemExit(f"Request {request_id} failed with error: {request_error['errorCode']: request_error['message']}")

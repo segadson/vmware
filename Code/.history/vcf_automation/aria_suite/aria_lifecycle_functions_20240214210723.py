@@ -1,6 +1,5 @@
 import requests
 import json
-import time
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -376,61 +375,3 @@ def get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id):
         raise SystemExit(e)
     
     return response.json()
-
-def get_aria_lifecycle_request_details(aria_lifecycle_ip, request_id):
-    '''
-    This function returns the request details for Aria Lifecycle Request
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/requests/{request_id}/requestDetails"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    return response.json()
-
-def get_aria_lifecycle_request_errors(aria_lifecycle_ip, request_id):
-    '''
-    This function returns the request errors for Aria Lifecycle Request
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/requests/{request_id}/error-causes"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    return response.json()
-
-def retry_aria_lifecycle_request(aria_lifecycle_ip, request_id):
-    '''
-    This function retries the request for Aria Lifecycle
-    '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/requests/{request_id}/retry"
-
-    headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    try:
-        response = requests.post(url, headers=headers, auth=(username, password), verify=False)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
-    
-    return response.json()
-
-def monitor_aria_lifecycle_request(aria_lifecycle_ip, request_id):
-    '''
-    This function monitors the request for Aria Lifecycle
-    '''
-    task_status = get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id)
-    while task_status['status'] == 'IN_PROGRESS':
-        task_status = get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id)
-        print(json.dumps(task_status, indent=4))
-        time.sleep(15)
-    if task_status['status'] == 'FAILED':
-        request_error = get_aria_lifecycle_request_errors(aria_lifecycle_ip, request_id)
-        raise SystemExit(f"Request {request_id} failed with error: {request_error['errorCode']: request_error['message']}")
