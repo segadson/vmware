@@ -686,31 +686,8 @@ def create_aria_operations_logs_payload(*args, **kwargs):
         "ntp": "",
         "configureAffinitySeparateAll": True,
         "timeSyncMode": "host",
-        "fipsMode" : False,
-        "monitorWithvROps": False
       }
-    github.eng.vmware.com/stumolo/pso_vcn_automation
-    # Nodes
-    node_array = []
-    for node in aria_operations_logs['nodes']:
-        node_object = {
-            "type": node['type'],
-            "properties": {
-                "hostname": node['name'],
-                "ipAddress": node['ipAddress'],
-                "vmName": node['name']
-            }
-        }
-        node_array.append(node_object)
-    
-    payload = {
-        "id": "vrli",
-        "version": aria_operations_logs['version'],
-        "properties": product_properties,
-        "clusterVIP": {
-            [clusterVips]
-        },
-        "nodes": [node_array]
-    }
+    payload = {}
+
 
 #     return product_payload

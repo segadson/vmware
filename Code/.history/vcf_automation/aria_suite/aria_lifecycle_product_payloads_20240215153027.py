@@ -689,7 +689,7 @@ def create_aria_operations_logs_payload(*args, **kwargs):
         "fipsMode" : False,
         "monitorWithvROps": False
       }
-    github.eng.vmware.com/stumolo/pso_vcn_automation
+    github.eng.vmware.com/stumolo/pso_vcn_automation.git
     # Nodes
     node_array = []
     for node in aria_operations_logs['nodes']:
