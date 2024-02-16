@@ -20,7 +20,7 @@ for VCF Part:
 "{\"vcfEnabled\":true,\"sddcManagerDetails\":[{\"sddcManagerHostName\":\"sfo-vcf01.sfo.rainpole.io\",\"sddcManagerName\":\"default\",\"sddcManagerVmid\":\"default\"}]}"
 '''
 
-def get_aria_lifecycle_environment_details(payload, *args, **kwargs):
+def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
     '''

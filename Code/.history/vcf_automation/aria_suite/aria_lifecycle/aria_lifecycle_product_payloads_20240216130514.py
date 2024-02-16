@@ -9,7 +9,7 @@ from aria_suite.aria_lifecycle.aria_lifecycle_functions import get_aria_life_cyc
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_dns, get_aria_lifecycle_locker_password, create_aria_lifecycle_locker_password
 from aria_suite.aria_lifecycle.aria_lifecycle_functions   import get_aria_lifecycle_ntp
 from aria_suite.aria_lifecycle.aria_lifecycle_functions  import get_aria_lifecycle_datacenter_vcenter
-from aria_suite.aria_lifecycle.dummy_payload import dummy_payload
+from aria_suite.aria_lifecycle.aria_lifecycle_functions import dummy_payload
 from authentication.get_authentication_token import get_vcenter_token
 from vcenter.vcenter_functions import get_vcenter_resource_pool
 from sddc_manager.avns import *
@@ -20,7 +20,7 @@ for VCF Part:
 "{\"vcfEnabled\":true,\"sddcManagerDetails\":[{\"sddcManagerHostName\":\"sfo-vcf01.sfo.rainpole.io\",\"sddcManagerName\":\"default\",\"sddcManagerVmid\":\"default\"}]}"
 '''
 
-def get_aria_lifecycle_environment_details(payload, *args, **kwargs):
+def get_aria_lifecycle_environment_details(*args, **kwargs):
     '''
     This function gets the environment details for Aria Lifecycle Product Deployment
     '''
