@@ -131,28 +131,6 @@ def dummy_payload():
                 }
               }
             ]
-          },
-          "aria_operations_logs":{
-            "version": "1.0.0",
-            "clusterVIP": "",
-            "nodes":[
-              {
-                "type":"vrli-master",
-                "properties":{
-                  "vmName":"vrli-master",
-                  "ipAddress":"192.168.1.109",
-                  "hostname":"vrli-master.seanlab.local"
-                }
-              },
-              {
-                "type":"vrli-worker",
-                "properties":{
-                  "vmName":"vrli-workder",
-                  "ipAddress":"192.168.1.110",
-                  "hostname":"vrli-workder.seanlab.local"
-                }
-              }
-            ]
           }
         }
       }

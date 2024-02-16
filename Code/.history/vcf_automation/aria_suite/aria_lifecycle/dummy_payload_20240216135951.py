@@ -78,7 +78,7 @@ def dummy_payload():
                 "properties": {
                   "vmName": "local-vrops-2",
                   "ipAddress": "192.168.1.95",
-                  "hostname": "vrops-replica.seanlab.local"
+                  "hostname": "local-vrops-2.seanlab.local"
                 }
               },
               {
@@ -86,7 +86,7 @@ def dummy_payload():
                 "properties": {
                   "vmName": "local-vrops-3",
                   "ipAddress": "192.168.1.97",
-                  "hostname": "vrops-data.seanlab.local"
+                  "hostname": "local-vrops-3.seanlab.local"
                 }
               },
               {
@@ -94,7 +94,7 @@ def dummy_payload():
                 "properties": {
                   "vmName": "local-vrops-3",
                   "ipAddress": "192.168.1.96",
-                  "hostname": "vrops-remotecollector.seanlab.local",
+                  "hostname": "local-vrops-3.seanlab.local",
                   "deployment_option": "smallrc"
                 }
               },
@@ -128,28 +128,6 @@ def dummy_payload():
                   "vmName":"local-vrni-2",
                   "ipAddress":"",
                   "hostname":"local-vrni-2.seanlab.local"
-                }
-              }
-            ]
-          },
-          "aria_operations_logs":{
-            "version": "1.0.0",
-            "clusterVIP": "",
-            "nodes":[
-              {
-                "type":"vrli-master",
-                "properties":{
-                  "vmName":"vrli-master",
-                  "ipAddress":"192.168.1.109",
-                  "hostname":"vrli-master.seanlab.local"
-                }
-              },
-              {
-                "type":"vrli-worker",
-                "properties":{
-                  "vmName":"vrli-workder",
-                  "ipAddress":"192.168.1.110",
-                  "hostname":"vrli-workder.seanlab.local"
                 }
               }
             ]

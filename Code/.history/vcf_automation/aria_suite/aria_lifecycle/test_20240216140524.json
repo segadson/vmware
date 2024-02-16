@@ -1,7 +1,4 @@
-import json
-
-def dummy_payload():
-    inputs = {
+{
   "aria_lifecycle": {
     "hostname": "local-vrlcm.seanlab.local",
     "ipAddress": "192.168.1.103",
@@ -137,19 +134,19 @@ def dummy_payload():
             "clusterVIP": "",
             "nodes":[
               {
-                "type":"vrli-master",
+                "type":"loginsight",
                 "properties":{
-                  "vmName":"vrli-master",
-                  "ipAddress":"192.168.1.109",
-                  "hostname":"vrli-master.seanlab.local"
+                  "vmName":"local-loginsight",
+                  "ipAddress":"",
+                  "hostname":"local-loginsight.seanlab.local"
                 }
               },
               {
-                "type":"vrli-worker",
+                "type":"loginsight",
                 "properties":{
-                  "vmName":"vrli-workder",
-                  "ipAddress":"192.168.1.110",
-                  "hostname":"vrli-workder.seanlab.local"
+                  "vmName":"local-loginsight-2",
+                  "ipAddress":"",
+                  "hostname":"local-loginsight-2.seanlab.local"
                 }
               }
             ]
