@@ -5,6 +5,7 @@ aria_suite/aria_lifecycle/__init__.py
 aria_suite/aria_lifecycle/aria_lifecycle_functions.py
 aria_suite/aria_lifecycle/aria_lifecycle_product_payloads.py
 aria_suite/aria_lifecycle/deploy_aria_lifecyle.py
+aria_suite/aria_lifecycle/dummy_payload.py
 authentication/__init__.py
 authentication/get_authentication_token.py
 sddc_manager/__init__.py
