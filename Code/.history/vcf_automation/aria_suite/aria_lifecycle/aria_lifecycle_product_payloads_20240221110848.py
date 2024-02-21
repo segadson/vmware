@@ -40,18 +40,8 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     if aria_environment is None:
         raise Exception('Aria Environment not found')
     
-    target_datacenter = payload['deployment_datacenter']['name']
-    target_vcenter_name_ = payload['deployment_vcenter']['name']
-    target_cluster_name = aria_environment['aria_suite_cluster']
-    aria_suite_datastore = aria_environment['aria_suite_datastore']
-    aria_suite_username = aria_environment['aria_suite_username']
-    aria_license_key = payload['aria_lifecycle']['license_key']
-    aria_lifecycle_email = payload['aria_lifecycle']['aria_lifecycle_email']
-    aria_suite_password = aria_environment['aria_suite_password']
-
-    deployment_network_properties_ = aria_environment['deployment_network_properties']
-    products_ = aria_environment['products']
-
+    target_datacenter = payload['deployment_vcenter']['name']
+    target_vcenter_name = payload['deployment_vcenter']['name']
 
     ######################################
     # Have To get Aria Environment Details
@@ -63,7 +53,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_datacenter_vmiid = target_datacenter['dataCenterVmid']
 
     #Get Aria Lifecycle Datacenter vCenter Details
-    target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name_)
+    target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name)
     target_vcenter_name = target_vcenter['vCenterHost']
     target_vcenter_username = target_vcenter['vcUsername']
     target_vcenter_password = target_vcenter['vcPassword']
@@ -179,7 +169,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
                     aria_operations_logs_cluster_vip]
 
     #Creating Product Alias
-    product_alias = f'{aria_enviorments_name}'
+    product_alias = f'{aria_enviornment_name}'
 
     #Create or Get Certificate
     certificate = get_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias)
@@ -195,7 +185,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     if license is None:
         print('License not found, creating license')
     
-    license = create_aria_lifecycle_license_keys(aria_lifecycle_ip, product_alias, aria_license_key)
+    license = create_aria_lifecycle_license_keys(aria_lifecycle_ip, product_alias, license_key)
     locker_license = f'locker:license:{license["vmid"]}:{product_alias}'
 
     #Create or Get Locker Password
@@ -204,7 +194,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     if password is None:
         print('Password not found, creating password')
     
-    password = create_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias, aria_suite_username ,aria_suite_password)
+    password = create_aria_lifecycle_locker_password(aria_lifecycle_ip, product_alias, locker_username ,locker_password)
 
     locker_password = f'locker:password:{password["vmid"]}:{product_alias}'
 

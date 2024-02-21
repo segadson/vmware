@@ -46,7 +46,6 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     aria_suite_datastore = aria_environment['aria_suite_datastore']
     aria_suite_username = aria_environment['aria_suite_username']
     aria_license_key = payload['aria_lifecycle']['license_key']
-    aria_lifecycle_email = payload['aria_lifecycle']['aria_lifecycle_email']
     aria_suite_password = aria_environment['aria_suite_password']
 
     deployment_network_properties_ = aria_environment['deployment_network_properties']
@@ -195,7 +194,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     if license is None:
         print('License not found, creating license')
     
-    license = create_aria_lifecycle_license_keys(aria_lifecycle_ip, product_alias, aria_license_key)
+    license = create_aria_lifecycle_license_keys(aria_lifecycle_ip, product_alias, license_key)
     locker_license = f'locker:license:{license["vmid"]}:{product_alias}'
 
     #Create or Get Locker Password

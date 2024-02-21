@@ -171,7 +171,7 @@ def create_aria_suite_products(payload):
 def main():
     payload = dummy_payload()
     aria_enviornment_name = 'aria_enviornment_1'
-    create_aria_suite_products(payload, aria_enviornment_name)
+    create_aria_suite_products(payload)
 
 
 if __name__ == "__main__":
