@@ -4,11 +4,9 @@ def dummy_payload():
     inputs = {
   "aria_lifecycle": {
     "hostname": "local-vrlcm.seanlab.local",
-    "aria_lifecycle_email":"sean.e.gadso@gmail.com",
     "ipAddress": "192.168.1.103",
-    "license_key": "5b",
     "deployment_datacenter": {
-      "name": "Default-DC",
+      "name": "Default-VC",
       "primaryLocation": "Palo Alto;California;US;37.44188;-122.14302"
     },
     "deployment_vcenter": {
@@ -166,7 +164,7 @@ def dummy_payload():
 
 def create_aria_suite_products(payload, aria_enviornment_name):
     # Create Environment Payload
-    get_aria_lifecycle_environment_details(payload, aria_enviornment_name)
+    print(payload)
 
     return payload
 def main():

@@ -45,6 +45,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_cluster_name = aria_environment['aria_suite_cluster']
     aria_suite_datastore = aria_environment['aria_suite_datastore']
     aria_suite_username = aria_environment['aria_suite_username']
+    print(payload['aria_lifecycle'])
     aria_license_key = payload['aria_lifecycle']['license_key']
     aria_lifecycle_email = payload['aria_lifecycle']['aria_lifecycle_email']
     aria_suite_password = aria_environment['aria_suite_password']

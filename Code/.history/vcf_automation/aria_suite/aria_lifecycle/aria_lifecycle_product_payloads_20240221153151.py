@@ -31,7 +31,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     vcenter_username = payload['aria_lifecycle']['deployment_vcenter']['username']
     vcenter_password = payload['aria_lifecycle']['deployment_vcenter']['password']
 
-    aria_lifecycle_ip = payload['aria_lifecycle']['hostname']
+    aria_lifecycle_ip = payload['aria_lifecycle']['aria_lifecycle']['hostname']
 
     for item in payload['aria_lifecycle']['aria_enviorments']:
         if item['name'] == aria_enviorments_name:
@@ -45,8 +45,8 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_cluster_name = aria_environment['aria_suite_cluster']
     aria_suite_datastore = aria_environment['aria_suite_datastore']
     aria_suite_username = aria_environment['aria_suite_username']
-    aria_license_key = payload['aria_lifecycle']['license_key']
-    aria_lifecycle_email = payload['aria_lifecycle']['aria_lifecycle_email']
+    aria_license_key = payload['aria_lifecycle']['aria_lifecycle']['license_key']
+    aria_lifecycle_email = payload['aria_lifecycle']['aria_lifecycle']['aria_lifecycle_email']
     aria_suite_password = aria_environment['aria_suite_password']
 
     deployment_network_properties_ = aria_environment['deployment_network_properties']

@@ -27,21 +27,21 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     ######################################
     # Get environment details Vairables
     ######################################
-    vcenter_ip = payload['aria_lifecycle']['deployment_vcenter']['hostname']
-    vcenter_username = payload['aria_lifecycle']['deployment_vcenter']['username']
-    vcenter_password = payload['aria_lifecycle']['deployment_vcenter']['password']
+    vcenter_ip = payload['deployment_vcenter']['hostname']
+    vcenter_username = payload['deployment_vcenter']['username']
+    vcenter_password = payload['deployment_vcenter']['password']
 
     aria_lifecycle_ip = payload['aria_lifecycle']['hostname']
 
-    for item in payload['aria_lifecycle']['aria_enviorments']:
+    for item in payload['aria_enviorments']:
         if item['name'] == aria_enviorments_name:
             aria_environment = item
             break
     if aria_environment is None:
         raise Exception('Aria Environment not found')
     
-    target_datacenter = payload['aria_lifecycle']['deployment_datacenter']['name']
-    target_vcenter_name_ = payload['aria_lifecycle']['deployment_vcenter']['name']
+    target_datacenter = payload['deployment_datacenter']['name']
+    target_vcenter_name_ = payload['deployment_vcenter']['name']
     target_cluster_name = aria_environment['aria_suite_cluster']
     aria_suite_datastore = aria_environment['aria_suite_datastore']
     aria_suite_username = aria_environment['aria_suite_username']
