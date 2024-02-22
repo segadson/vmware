@@ -2,7 +2,6 @@ import requests
 import json
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
-import logging
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -37,5 +36,8 @@ def deploy_aria_lifecycle(sddc_manager_ip, vcf_token, aria_lifecycle_payload):
       }
     response = requests.post(url, headers=headers, data=json.dumps(aria_lifecycle_payload), verify=False)
     request_json = return_json(response)
-
-    return request_json
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(aria_lifecycle_payload), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    return response.json()
