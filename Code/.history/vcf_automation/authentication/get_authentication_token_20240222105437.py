@@ -68,10 +68,11 @@ def get_nsxt_token():
       'Content-Type': 'application/json',
       'Accept': 'application/json'
       }
-    response = requests.post(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
-
-    return return_response['token']
+    try:
+        response = requests.post(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    return response.json()['token']
 
 def get_avi_token():
     '''
@@ -87,7 +88,8 @@ def get_avi_token():
       'Content-Type': 'application/json',
       'Accept': 'application/json'
       }
-    response = requests.post(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
-
+    try:
+        response = requests.post(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     return response.cookies['session_id']
