@@ -1,11 +1,9 @@
 import sys
-import logging
 sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
 
 from sddc_manager.avns.avn_functions import create_avns, get_avn_id, create_avn_payload, validate_avn_creation
 from authentication.get_authentication_token import get_vcf_token
 from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
-from error_handling.return_json import return_json
 import json
 
 

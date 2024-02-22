@@ -2,9 +2,12 @@ import sys
 import logging
 sys.path.append('/Users/Administrator/vmware/Code/vcf_automation')
 
-from authentication import get_authentication_token
+from edge_cluster.edge_cluster_functions import validate_edge_cluster, create_sddc_manager_edge_cluster
+from authentication.get_authentication_token import get_vcf_token
+from sddc_manager.global_sddc_manager_functions import validate_sddc_manager_component_request, monitor_sddc_manager_validation
+from error_handling
 from sddc_manager.clusters import clusters_functions
-from error_handling import return_json
+import json
 
 def create_edge_cluster_payload(sdd_manger_ip, vcf_token, domain_cluster_name):
     '''
@@ -36,13 +39,13 @@ def create_edge_cluster_payload(sdd_manger_ip, vcf_token, domain_cluster_name):
     "edgeClusterType": "NSX-T",
     "edgeFormFactor": "LARGE",
     "edgeNodeSpecs": [ {
-        "clusterId": "",
+        "clusterId": cluster_id,
         "edgeNodeName": "edge1-mgmt.vcf.sddc.lab",
         "edgeTep1IP": "172.27.13.2/24",
         "edgeTep2IP": "172.27.13.3/24",
         "edgeTepGateway": "172.27.13.1",
         "edgeTepVlan": 13,
-        "interRackCluster": false,
+        "interRackCluster": False,
         "managementGateway": "10.0.0.221",
         "managementIP": "10.0.0.23/24",
         "uplinkNetwork": [ {
@@ -85,3 +88,25 @@ def create_edge_cluster_payload(sdd_manger_ip, vcf_token, domain_cluster_name):
 }
 
     return payload
+
+def create_edge_cluster_on_domain(sddc_manager_ip, domain_cluster_name):
+    # Get the VCF token
+    vcf_token = get_vcf_token()
+
+    payload = create_edge_cluster_payload(sddc_manager_ip, vcf_token, domain_cluster_name)
+
+    # Call the SDDC Manager API to Validate the edge cluster
+    validate_edge_cluster(sddc_manager_ip, vcf_token, payload)
+
+    # Call the SDDC Manager API to Create the edge cluster
+    create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, payload)
+
+    #return modified_data
+
+def main():
+    sddc_manager_ip = 'sddc-manager.vcf.sddc.lab'
+    domain_cluster_name = 'mgmt-cluster-01'
+    create_edge_cluster_on_domain(sddc_manager_ip, domain_cluster_name)
+
+if __name__ == "__main__":
+    main()

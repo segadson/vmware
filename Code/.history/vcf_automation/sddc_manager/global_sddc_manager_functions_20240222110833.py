@@ -61,11 +61,13 @@ def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_ty
       'Accept': 'application/json',
       'Authorization': f'Bearer {vcf_token}'
       }
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    #print(json.dumps(response.json(), indent=4))
-    return request_json
+    print(json.dumps(response.json(), indent=4))
+    return response.json()
 
 def monitor_sddc_manager_validation(sddc_manager_ip, vcf_token, validation_type, request_id):
     '''

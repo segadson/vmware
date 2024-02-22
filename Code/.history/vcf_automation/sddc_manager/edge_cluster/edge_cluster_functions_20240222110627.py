@@ -52,8 +52,12 @@ def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):
       }
     response = requests.get(url, headers=headers, verify=False)
     request_json = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
 
-    for item in request_json['elements']:
+    for item in response.json()['elements']:
         if item['name'] == edge_cluster_name:
             edge_cluster_id = item['id']
 

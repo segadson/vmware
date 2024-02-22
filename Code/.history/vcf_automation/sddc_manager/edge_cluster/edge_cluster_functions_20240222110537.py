@@ -33,10 +33,11 @@ def create_sddc_manager_edge_cluster(sddc_manager_ip, vcf_token, edge_cluster_pa
       'Accept': 'application/json',
       'Authorization': f'Bearer {vcf_token}'
       }
-    response = requests.post(url, headers=headers, data=json.dumps(edge_cluster_payload), verify=False)
-    request_json = return_json(response)
-
-    request_id = request_json['id']
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(edge_cluster_payload), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    request_id = response.json()['id']
     monitor_sddc_manager_task(sddc_manager_ip, vcf_token, request_id)
 
 def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):
@@ -50,10 +51,12 @@ def get_edge_cluster_id(sddc_manager_ip, vcf_token, edge_cluster_name):
       'Accept': 'application/json',
       'Authorization': f'Bearer {vcf_token}'
       }
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
 
-    for item in request_json['elements']:
+    for item in response.json()['elements']:
         if item['name'] == edge_cluster_name:
             edge_cluster_id = item['id']
 

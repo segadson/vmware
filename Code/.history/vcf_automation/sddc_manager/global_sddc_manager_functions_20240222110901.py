@@ -63,6 +63,10 @@ def get_sddc_manager_validation_status(sddc_manager_ip, vcf_token, validation_ty
       }
     response = requests.get(url, headers=headers, verify=False)
     request_json = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
     #print(json.dumps(response.json(), indent=4))
     return request_json
