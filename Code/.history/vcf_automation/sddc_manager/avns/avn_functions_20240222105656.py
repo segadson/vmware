@@ -56,8 +56,12 @@ def create_avns(sddc_manager_ip, vcf_token, avn_payload):
       }
     response = requests.post(url, headers=headers, data=json.dumps(avn_payload), verify=False)
     request_json = return_json(response)
-
-    request_id = request_json['id']
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(avn_payload), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    
+    request_id = request_json)['id']
     monitor_sddc_manager_task(sddc_manager_ip, vcf_token, request_id)
 
     #To Do: Add validation for AVN creation
@@ -92,11 +96,11 @@ def get_avn_id(sddc_manager_ip, vcf_token, avn_type, network_name):
       'Accept': 'application/json',
       'Authorization': f'Bearer {vcf_token}'
       }
-    
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = return_json(response)
-    
-    for item in request_json:
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    for item in response.json():
         if item['regionType'] == avn_type and item['name'] == network_name:
             avn = item
 
