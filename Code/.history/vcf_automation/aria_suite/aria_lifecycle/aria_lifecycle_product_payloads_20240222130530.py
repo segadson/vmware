@@ -67,6 +67,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_vcenter_name = target_vcenter['vCenterHost']
     target_vcenter_username = target_vcenter['vcUsername']
     target_vcenter_password = target_vcenter['vcPassword']
+    
     for item in target_vcenter['clusters']:
         if item['clusterName'] == target_cluster_name:
             target_cluster = item

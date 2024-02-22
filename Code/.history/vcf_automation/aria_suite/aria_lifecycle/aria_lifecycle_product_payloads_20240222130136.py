@@ -64,17 +64,20 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     # #Get Aria Lifecycle Datacenter vCenter Details
     target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name_)
+    print(target_vcenter)
+    stop
     target_vcenter_name = target_vcenter['vCenterHost']
     target_vcenter_username = target_vcenter['vcUsername']
     target_vcenter_password = target_vcenter['vcPassword']
-    for item in target_vcenter['clusters']:
-        if item['clusterName'] == target_cluster_name:
-            target_cluster = item
-            break
-    if target_cluster is None:
-        raise Exception('Target Cluster not found')
     
-    cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
+    # for item in target_vcenter['clusters']:
+    #     if item['clusterName'] == target_cluster_name:
+    #         target_cluster = item
+    #         break
+    # if target_cluster is None:
+    #     raise Exception('Target Cluster not found')
+    
+    # cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
 
     # #Get Cluster Storage
     # for item in target_cluster['storages']:
