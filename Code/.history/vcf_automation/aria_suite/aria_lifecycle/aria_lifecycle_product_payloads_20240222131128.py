@@ -60,15 +60,14 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     vcenter_token = get_vcenter_token()
     #sddc_manager_token = get_vcf_token(sddc_manager_ip, sddc_manager_username, sddc_manager_password)
     target_datacenter = get_aria_life_cycle_datacenter(aria_lifecycle_ip, target_datacenter)
-    print(target_datacenter)
-    target_datacenter_vmid = target_datacenter['dataCenterVmid']
+    target_datacenter_vmiid = target_datacenter['dataCenterVmid']
 
     # #Get Aria Lifecycle Datacenter vCenter Details
-    # target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter['dataCenterName'], target_vcenter_name_)
-    # target_vcenter_name = target_vcenter['vCenterHost']
-    # target_vcenter_username = target_vcenter['vcUsername']
-    # target_vcenter_password = target_vcenter['vcPassword']
-    # print(target_vcenter)
+    target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name_)
+    target_vcenter_name = target_vcenter['vCenterHost']
+    target_vcenter_username = target_vcenter['vcUsername']
+    target_vcenter_password = target_vcenter['vcPassword']
+    print(target_vcenter)
     # for item in target_vcenter['clusters']:
     #     if item['clusterName'] == target_cluster_name:
     #         target_cluster = item
@@ -77,8 +76,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     #     raise Exception('Target Cluster not found')
     
     # cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
-
-    # #Get Cluster Storage
+    # # #Get Cluster Storage
     # for item in target_cluster['storages']:
     #     if item['storageName'] == aria_suite_datastore:
     #         cluster_datastore = item
@@ -212,7 +210,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     # environment_details = {
     #     "license": locker_license,
     #     "environment_details_payload"  : {
-    #     "dataCenterVmid": target_datacenter_vmid,
+    #     "dataCenterVmid": target_datacenter_vmiid,
     #     "regionName": "default",
     #     "zoneName": "default",
     #     "vCenterName": target_vcenter_name,
