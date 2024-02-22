@@ -10,7 +10,7 @@ from error_handling.return_json import return_json
 
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 username = 'admin@local'
-password =  'x9SyJnRR'
+password =  'x9SyJnRR!'
 
 #########################################################
 # Locker Functions

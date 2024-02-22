@@ -6,11 +6,9 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-from error_handling.return_json import return_json
-
 aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
 username = 'admin@local'
-password =  'x9SyJnRR'
+password =  'x9SyJnRR!'
 
 #########################################################
 # Locker Functions
@@ -72,13 +70,11 @@ def get_aria_life_cycle_datacenter(aria_lifecycle_ip,target_datacenter):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    datacenter = return_json(response)
-    # try:
-    #     response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    # except requests.exceptions.RequestException as e:
-    #     raise SystemExit(f"Datacenter {target_datacenter} not found")
-    # print(response.json()) 
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(f"Datacenter {target_datacenter} not found")
+    print(response.json()) 
     
     datacenter = response.json()
     
