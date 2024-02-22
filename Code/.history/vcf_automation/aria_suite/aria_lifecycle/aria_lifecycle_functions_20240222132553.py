@@ -84,8 +84,15 @@ def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, 
 
     response = requests.get(url, headers=headers, auth=(username, password), verify=False)
     return_response = return_json(response)
+    print(return_response)
+    for item in return_response:
+        if item['vCenterName'] == target_vcenter:
+            vcenter =  item
+
+    if vcenter == None:
+        raise SystemExit(f"vCenter {target_vcenter} not found")
     
-    return return_response
+    return vcenter
 
 def get_aria_lifecycle_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter):
     '''
