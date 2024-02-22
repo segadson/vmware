@@ -61,6 +61,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     #sddc_manager_token = get_vcf_token(sddc_manager_ip, sddc_manager_username, sddc_manager_password)
     target_datacenter = get_aria_life_cycle_datacenter(aria_lifecycle_ip, target_datacenter)
     target_datacenter_vmiid = target_datacenter['dataCenterVmid']
+    print(target_datacenter_vmiid)
 
     # #Get Aria Lifecycle Datacenter vCenter Details
     target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter_name_)
