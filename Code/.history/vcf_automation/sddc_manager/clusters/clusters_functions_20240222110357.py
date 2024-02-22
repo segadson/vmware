@@ -20,7 +20,7 @@ def get_sddc_manager_clusters(sddc_manager_ip, vcf_token):
       }
     response = requests.get(url, headers=headers, verify=False)
     request_json = return_json(response)
-
+    
     return request_json
 
 def get_sddc_maanger_stretched_clusters(sddc_manager_ip, vcf_token):
@@ -33,7 +33,8 @@ def get_sddc_maanger_stretched_clusters(sddc_manager_ip, vcf_token):
       'Accept': 'application/json',
       'Authorization': f'Bearer {vcf_token}'
       }
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = return_json(response)
-
-    return request_json
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    return response.json()
