@@ -36,8 +36,8 @@ def get_vcenter_token():
     '''
     This function returns a vCenter token for API authentication
     '''
-    username = 'administrator@seablab.local'
-    password = 'x9SyJnRR!'
+    username = 'administrator@vsphere.local'
+    password = 'VMware123!'
     vcenter_ip = 'bigdaddykingdom.seanlab.local'
 
     url = f"https://{vcenter_ip}/rest/com/vmware/cis/session"

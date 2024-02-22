@@ -6,20 +6,9 @@ from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-aria_lifecycle_ip = 'local-vrlcm.seanlab.local'
-username = 'admin@local'
-password =  'x9SyJnRR!'
-
-def return_json(response):
-    try:
-        response.raise_for_status()
-    except requests.exceptions.HTTPError as e:
-        # Whoops it wasn't a 200
-        return "Error: " + str(e)
-
-    # Must have been a 200 status code
-    json_obj = response.json()
-    return json_obj
+aria_lifecycle_ip = 'aria_lifecycle.vcf.sddc.lab'
+username = 'admin'
+password =  'VMware123!'
 
 #########################################################
 # Locker Functions
@@ -77,18 +66,25 @@ def get_aria_life_cycle_datacenter(aria_lifecycle_ip,target_datacenter):
     '''
     This function returns the datacenter details for a given datacenter
     '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/datacenters/{target_datacenter}"
+    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/{target_datacenter}"
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
     try:
         response = requests.get(url, headers=headers, auth=(username, password), verify=False)
     except requests.exceptions.RequestException as e:
+        print(e)
+        raise SystemExit(e)
+    
+    print(e)
+    
+    for item in response.json():
+        if item['dataCenterName'] == target_datacenter:
+            datacenter =  item
+
+    if datacenter == None:
         raise SystemExit(f"Datacenter {target_datacenter} not found")
-    print(response.json()) 
-    
-    datacenter = response.json()
-    
+    # datacenter['datacenterVmid']
     return datacenter
 
 def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter):

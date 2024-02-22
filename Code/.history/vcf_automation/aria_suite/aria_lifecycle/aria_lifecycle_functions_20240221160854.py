@@ -84,11 +84,16 @@ def get_aria_life_cycle_datacenter(aria_lifecycle_ip,target_datacenter):
     try:
         response = requests.get(url, headers=headers, auth=(username, password), verify=False)
     except requests.exceptions.RequestException as e:
-        raise SystemExit(f"Datacenter {target_datacenter} not found")
+        raise SystemExit(e)
     print(response.json()) 
-    
-    datacenter = response.json()
-    
+
+    for item in response.json():
+        if item['dataCenterName'] == target_datacenter:
+            datacenter =  item
+
+    if datacenter == None:
+        raise SystemExit(f"Datacenter {target_datacenter} not found")
+    # datacenter['datacenterVmid']
     return datacenter
 
 def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter):

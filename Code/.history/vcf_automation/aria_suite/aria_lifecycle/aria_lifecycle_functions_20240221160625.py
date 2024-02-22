@@ -77,18 +77,23 @@ def get_aria_life_cycle_datacenter(aria_lifecycle_ip,target_datacenter):
     '''
     This function returns the datacenter details for a given datacenter
     '''
-    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/datacenters/{target_datacenter}"
+    url = f"https://{aria_lifecycle_ip}/lcm/lcops/api/v2/{target_datacenter}"
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
     try:
         response = requests.get(url, headers=headers, auth=(username, password), verify=False)
     except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    print(response.status_code)
+
+    for item in response.json():
+        if item['dataCenterName'] == target_datacenter:
+            datacenter =  item
+
+    if datacenter == None:
         raise SystemExit(f"Datacenter {target_datacenter} not found")
-    print(response.json()) 
-    
-    datacenter = response.json()
-    
+    # datacenter['datacenterVmid']
     return datacenter
 
 def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter):
