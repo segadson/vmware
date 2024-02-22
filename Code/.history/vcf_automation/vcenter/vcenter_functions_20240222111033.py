@@ -56,5 +56,9 @@ def get_vcenter_vsan_storages(vcenter_ip):
     
     response = requests.get(url, headers=headers, verify=False)
     request_json = response.json()
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
     return request_json[0]['name']

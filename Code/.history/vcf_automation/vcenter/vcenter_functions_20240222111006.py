@@ -53,8 +53,10 @@ def get_vcenter_vsan_storages(vcenter_ip):
     }
 
     url = f"https://{vcenter_ip}/rest/vcenter/datastore?filter.types=vsan"
+
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = response.json()
-    
-    return request_json[0]['name']
+    return response.json()[0]['name']

@@ -29,7 +29,10 @@ def get_vcenter_resource_pool(vcenter_ip, vcf_token, vcenter_name, resource_pool
 
     response = requests.get(url, headers=headers, verify=False)
     request_json = response.json()
-
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     for item in request_json['value']:
         if item['name'] == 'Resources':
             resource_pool_id = item['resource_pool']
@@ -53,8 +56,10 @@ def get_vcenter_vsan_storages(vcenter_ip):
     }
 
     url = f"https://{vcenter_ip}/rest/vcenter/datastore?filter.types=vsan"
+
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    response = requests.get(url, headers=headers, verify=False)
-    request_json = response.json()
-    
-    return request_json[0]['name']
+    return response.json()[0]['name']
