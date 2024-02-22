@@ -1,7 +1,6 @@
 import requests
 import json
 import time
-import logging
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -54,6 +53,10 @@ def create_aria_lifecycle_locker_password(aria_lifecycle_ip,alias, username, pas
 
     response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
     return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
     return return_response
 
@@ -70,9 +73,16 @@ def get_aria_life_cycle_datacenter(aria_lifecycle_ip,target_datacenter):
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
     response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    datacenter = return_json(response)
+    # try:
+    #     response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    # except requests.exceptions.RequestException as e:
+    #     raise SystemExit(f"Datacenter {target_datacenter} not found")
+    # print(response.json()) 
     
-    return return_response
+    datacenter = response.json()
+    
+    return datacenter
 
 def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, target_vcenter):
     '''
@@ -82,10 +92,12 @@ def get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter, 
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    for item in return_response:
+    for item in response.json():
         if item['vCenterName'] == target_vcenter:
             vcenter =  item
 
@@ -102,10 +114,12 @@ def get_aria_lifecycle_vcenter(aria_lifecycle_ip, target_datacenter, target_vcen
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    for item in return_response:
+    for item in response.json():
         if item['name'] == target_vcenter:
             vcenter =  item
 
@@ -122,13 +136,15 @@ def get_aria_lifecycle_dns(aria_lifecycle_ip):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    if return_response == None:
+    if response.json() == None:
         raise SystemExit(f"No DNS found")
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_ntp(aria_lifecycle_ip):
     '''
@@ -138,13 +154,15 @@ def get_aria_lifecycle_ntp(aria_lifecycle_ip):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    if return_response == None:
+    if response.json() == None:
         raise SystemExit(f"No NTP found")
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_license_keys(aria_lifecycle_ip):
     '''
@@ -154,13 +172,15 @@ def get_aria_lifecycle_license_keys(aria_lifecycle_ip):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    if return_response == None:
+    if response.json() == None:
         raise SystemExit(f"No license keys found")
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip,license_key_alias):
     '''
@@ -170,10 +190,12 @@ def get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip,license_key_alias
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_environment(aria_lifecycle_ip):
     '''
@@ -183,13 +205,15 @@ def get_aria_lifecycle_environment(aria_lifecycle_ip):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    if return_response == None:
+    if response.json() == None:
         raise SystemExit(f"No environment found")
     
-    return return_response
+    return response.json()
 
 #########################################################
 # Create License Keys
@@ -208,10 +232,12 @@ def create_aria_lifecycle_license_keys(aria_lifecycle_ip,license_key_alias, lice
     "tenant": ""
     })
 
-    response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip,license_key_alias):
     '''
@@ -221,10 +247,12 @@ def get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip,license_key_alias
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    for item in return_response:
+    for item in response.json():
         if item['alias'] == license_key_alias:
             license_key =  item
 
@@ -265,10 +293,12 @@ def create_aria_lifecycle_certificate(aria_lifecycle_ip,alias, hostnames, ip_add
             "validity": 729
             })
 
-    response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain, passphrase, private_key):
     '''
@@ -284,10 +314,12 @@ def import_aria_lifecycle_certificate(aria_lifecycle_ip,alias, certificat_chain,
     "passphrase": passphrase
     })
 
-    response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
     '''
@@ -297,10 +329,12 @@ def get_aria_lifecycle_certificate(aria_lifecycle_ip,alias):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    for item in return_response['certificates']:
+    for item in response.json()['certificates']:
         if item['alias'] == alias:
             certificate =  item
 
@@ -319,10 +353,12 @@ def prevalidate_aria_lifecycle_enviornment(aria_lifecycle_ip,payload):
 
     payload = json.dumps(payload)
 
-    response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def create_aria_lifecycle_environment(aria_lifecycle_ip,payload):
     '''
@@ -334,10 +370,12 @@ def create_aria_lifecycle_environment(aria_lifecycle_ip,payload):
 
     payload = json.dumps(payload)
 
-    response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id):
     '''
@@ -347,10 +385,12 @@ def get_aria_lifecycle_request_status(aria_lifecycle_ip, request_id):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_request_details(aria_lifecycle_ip, request_id):
     '''
@@ -360,10 +400,12 @@ def get_aria_lifecycle_request_details(aria_lifecycle_ip, request_id):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def get_aria_lifecycle_request_errors(aria_lifecycle_ip, request_id):
     '''
@@ -373,10 +415,12 @@ def get_aria_lifecycle_request_errors(aria_lifecycle_ip, request_id):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.get(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
+    try:
+        response = requests.get(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
     
-    return return_response
+    return response.json()
 
 def retry_aria_lifecycle_request(aria_lifecycle_ip, request_id):
     '''
@@ -386,10 +430,12 @@ def retry_aria_lifecycle_request(aria_lifecycle_ip, request_id):
 
     headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-    response = requests.post(url, headers=headers, auth=(username, password), verify=False)
-    return_response = return_json(response)
-
-    return return_response
+    try:
+        response = requests.post(url, headers=headers, auth=(username, password), verify=False)
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+    
+    return response.json()
 
 def monitor_aria_lifecycle_request(aria_lifecycle_ip, request_id):
     '''

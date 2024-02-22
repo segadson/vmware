@@ -1,7 +1,6 @@
 import requests
 import json
 import time
-import logging
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
