@@ -70,46 +70,44 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_vcenter = get_aria_lifecycle_datacenter_vcenter(aria_lifecycle_ip, target_datacenter['dataCenterName'], target_vcenter_name_)
     target_vcenter_host = target_vcenter['vCenterHost']
     target_vcenter_datacenters = target_vcenter['vCDataCenters']
-    try:
-        for item in target_vcenter_datacenters:
-            if item['vcDataCenterName'] == target_vcenter_datacenter:
-                target_vcenter_datacenter = item
-                break
-    except:
+    
+    for item in target_vcenter_datacenters:
+        if item['vcDataCenterName'] == target_vcenter_datacenter:
+            target_vcenter_datacenter = item
+            break
+    if target_vcenter_datacenter is None:
         raise Exception('Target Datacenter not found')
     
     target_vcenter_username = target_vcenter['vcUsername']
     target_vcenter_password = target_vcenter['vcPassword']
     
-    try:
-        for item in target_vcenter_datacenter['clusters']:
-            if item['clusterName'] == target_cluster_name:
-                target_cluster = item
-                break
-    except:
+    for item in target_vcenter_datacenter['clusters']:
+        if item['clusterName'] == target_cluster_name:
+            target_cluster = item
+            break
+    if target_cluster is None:
         raise Exception('Target Cluster not found')
-
+    
     cluster_name = target_cluster['clusterName']
 
 
     #Get Cluster Storage
-    try:
-        for item in target_cluster['storages']:
-            if item['storageName'] == aria_suite_datastore:
-                cluster_datastore = item
-                break
-    except:
+    for item in target_cluster['storages']:
+        if item['storageName'] == aria_suite_datastore:
+            logging.info(f'Cluster Datastore: {item}')
+            cluster_datastore = item
+            break
+    if cluster_datastore is None:
         raise Exception('Datastore not found')
     
     #Get Cluster Network Properties
     cluster_network_properties = deployment_network_properties_
-    
-    try:
-        for item in target_cluster['networks']:
-            if item['network'] == cluster_network_properties['network_name']:
-                network = item['network'] 
-                break
-    except:
+     
+    for item in target_cluster['networks']:
+        if item['network'] == cluster_network_properties['network_name']:
+            network = item['network'] 
+            break
+    if network is None:
         raise Exception('Network not found')
 
     # #Get DNS and NTP
@@ -193,17 +191,16 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
                     aria_operations_network_cluster_vip, 
                     aria_operations_logs_cluster_vip]
 
-    #Creating Product Alias
-    product_alias = f'{aria_enviorments_name}'
+    # #Creating Product Alias
+    # product_alias = f'{aria_enviorments_name}'
 
-    #Create or Get Certificate
-    try:
-        certificate = get_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias)
-    except:
-        certificate = None
-        print('Certificate not found, creating certificate')
+    # #Create or Get Certificate
+    # certificate = get_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias)
+
+    # if certificate is None:
+    #     print('Certificate not found, creating certificate')
         
-    certificate = create_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias, hostnames, ip_addresses)
+    # certificate = create_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias, hostnames, ip_addresses)
     # locker_certificate = f'locker:certificate:{certificate["vmid"]}:{product_alias}'
     # #Create or Get License
     # license = get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip, product_alias)

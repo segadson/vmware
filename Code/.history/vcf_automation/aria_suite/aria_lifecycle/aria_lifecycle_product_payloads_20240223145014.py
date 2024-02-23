@@ -203,7 +203,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
         certificate = None
         print('Certificate not found, creating certificate')
         
-    certificate = create_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias, hostnames, ip_addresses)
+    # certificate = create_aria_lifecycle_certificate(aria_lifecycle_ip, product_alias, hostnames, ip_addresses)
     # locker_certificate = f'locker:certificate:{certificate["vmid"]}:{product_alias}'
     # #Create or Get License
     # license = get_aria_lifecycle_license_keys_by_alias(aria_lifecycle_ip, product_alias)
