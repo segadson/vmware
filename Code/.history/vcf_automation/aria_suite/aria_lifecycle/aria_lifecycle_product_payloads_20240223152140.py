@@ -186,12 +186,9 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     #Get Hostnames and IP Addresses
     hostnames = aria_automation_hostnames + aria_operations_hostnames + aria_operations_network_hostnames + aria_operations_logs_hostnames
-    ip_addresses = aria_automation_ip_addresses + aria_operations_ip_addresses + aria_operations_network_ip_addresses + aria_operations_logs_ip_addresses
-    ip_addresses.append(aria_operations_cluster_vip)
-    ip_addresses.append(aria_operations_network_cluster_vip)
-    ip_addresses.append(aria_operations_logs_cluster_vip)
-    ip_addresses.append(aria_automation_cluster_vip)
-    
+    ip_addresses = aria_automation_ip_addresses + aria_operations_ip_addresses
+    print(ip_addresses)
+
     #Creating Product Alias
     product_alias = f'{aria_enviorments_name}'
 
