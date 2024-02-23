@@ -117,10 +117,12 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     dns_settings = []
     ntp_settings_array = []
 
+    print(dns) 
+
     for item in dns:
         dns_settings.append(item['hostName'])
 
-    dns_string = dns_settings
+    # dns_string = f'{dns_settings[0]},{dns_settings[1]}'
 
     # for item in ntp:
     #     ntp_settings_array.append(item['hostname'])

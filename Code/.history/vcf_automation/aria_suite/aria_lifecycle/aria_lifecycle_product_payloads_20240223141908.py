@@ -114,13 +114,13 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     dns = get_aria_lifecycle_dns(aria_lifecycle_ip)
     ntp = get_aria_lifecycle_ntp(aria_lifecycle_ip)
 
-    dns_settings = []
-    ntp_settings_array = []
+    # dns_settings = []
+    # ntp_settings_array = []
 
-    for item in dns:
-        dns_settings.append(item['hostName'])
+    # for item in dns:
+    #     dns_settings.append(item['hostname'])
 
-    dns_string = dns_settings
+    # dns_string = f'{dns_settings[0]},{dns_settings[1]}'
 
     # for item in ntp:
     #     ntp_settings_array.append(item['hostname'])
