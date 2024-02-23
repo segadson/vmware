@@ -164,23 +164,23 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     
     aria_operations_network_cluster_vip = aria_operations_network['clusterVIP']
 
-    #Get Individual Cluster Nodes
-    for node in aria_operations_network['nodes']:
-        aria_operations_network_hostnames.append(node['properties']['hostname'])
-        aria_operations_network_ip_addresses.append(node['properties']['ipAddress'])
+    # #Get Individual Cluster Nodes
+    # for node in aria_operations_network['nodes']:
+    #     aria_operations_network_hostnames.append(node['properties']['hostname'])
+    #     aria_operations_network_ip_addresses.append(node['properties']['ipAddress'])
 
-    #Get Aira Operations Logs Hostnames and IP Addresses
-    aria_operations_logs_hostnames = []
-    aria_operations_logs_ip_addresses = []
+    # #Get Aira Operations Logs Hostnames and IP Addresses
+    # aria_operations_logs_hostnames = []
+    # aria_operations_logs_ip_addresses = []
 
-    aria_operations_logs = products['aria_operations_logs']
+    # aria_operations_logs = products['aria_operations_logs']
     
-    aria_operations_logs_cluster_vip = aria_operations_logs['clusterVIP']
+    # aria_operations_logs_cluster_vip = aria_operations_logs['clusterVIP']
 
-    #Get Individual Cluster Nodes
-    for node in aria_operations_logs['nodes']:
-        aria_operations_logs_hostnames.append(node['properties']['hostname'])
-        aria_operations_logs_ip_addresses.append(node['properties']['ipAddress'])
+    # #Get Individual Cluster Nodes
+    # for node in aria_operations_logs['nodes']:
+    #     aria_operations_logs_hostnames.append(node['properties']['hostname'])
+    #     aria_operations_logs_ip_addresses.append(node['properties']['ipAddress'])
 
     # #Get Hostnames and IP Addresses
     # hostnames = [aria_automation_hostnames, aria_operations_hostnames, aria_operations_network_hostnames, aria_operations_logs_hostnames, 
