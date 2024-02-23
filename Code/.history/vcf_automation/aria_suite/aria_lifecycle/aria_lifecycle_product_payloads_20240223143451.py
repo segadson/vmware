@@ -138,10 +138,14 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     aria_automation_cluster_vip = aria_automation['clusterVIP']
 
     #Get Individual Cluster Nodes
+    print(json.dumps(aria_automation['nodes'], indent=4))
 
     for node in aria_automation['nodes']:
-        aria_automation_hostnames.append(node['properties']['hostname'])
-        aria_automation_ip_addresses.append(node['properties']['ipAddress'])
+        print(node['properties'])
+        for key, value in node.items() :
+            print (key, value)
+        # aria_automation_hostnames.append(node['properties']['name'])
+        # aria_automation_ip_addresses.append(node['properties']['ipAddress'])
 
     #Get Aira Operations Hostnames and IP Addresses
     # aria_operations_hostnames = []
@@ -153,8 +157,8 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
                                                   
     # #Get Individual Cluster Nodes
     # for node in aria_operations['nodes']:
-    #     aria_operations_hostnames.append(node['properties']['hostname'])
-    #     aria_operations_ip_addresses.append(node['properties']['ipAddress'])
+    #     aria_operations_hostnames.append(node['name'])
+    #     aria_operations_ip_addresses.append(node['ipAddress'])
 
     # #Get Aira Operations Network Hostnames and IP Addresses
     # aria_operations_network_hostnames = []
@@ -166,8 +170,8 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     # #Get Individual Cluster Nodes
     # for node in aria_operations_network['nodes']:
-    #     aria_operations_network_hostnames.append(node['properties']['hostname'])
-    #     aria_operations_network_ip_addresses.append(node['properties']['ipAddress'])
+    #     aria_operations_network_hostnames.append(node['name'])
+    #     aria_operations_network_ip_addresses.append(node['ipAddress'])
 
     # #Get Aira Operations Logs Hostnames and IP Addresses
     # aria_operations_logs_hostnames = []
@@ -179,8 +183,8 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     # #Get Individual Cluster Nodes
     # for node in aria_operations_logs['nodes']:
-    #     aria_operations_logs_hostnames.append(node['properties']['hostname'])
-    #     aria_operations_logs_ip_addresses.append(node['properties']['ipAddress'])
+    #     aria_operations_logs_hostnames.append(node['name'])
+    #     aria_operations_logs_ip_addresses.append(node['ipAddress'])
 
     # #Get Hostnames and IP Addresses
     # hostnames = [aria_automation_hostnames, aria_operations_hostnames, aria_operations_network_hostnames, aria_operations_logs_hostnames, 
