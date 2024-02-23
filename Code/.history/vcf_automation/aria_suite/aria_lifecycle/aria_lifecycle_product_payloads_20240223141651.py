@@ -104,7 +104,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     cluster_network_properties = deployment_network_properties_
      
     for item in target_cluster['networks']:
-        if item['network'] == cluster_network_properties['network_name']:
+        if item['network'] == cluster_network_properties['network']:
             network = item['network'] 
             break
     if network is None:
