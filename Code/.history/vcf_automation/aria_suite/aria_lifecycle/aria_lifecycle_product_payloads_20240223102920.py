@@ -1,6 +1,5 @@
 import requests
 import json
-import logging
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -34,14 +33,12 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     aria_lifecycle_ip = payload['aria_lifecycle']['hostname']
 
-    # for item in payload['aria_lifecycle']['aria_enviorments']:
-    #     if item['name'] == aria_enviorments_name:
-    #         aria_environment = item
-    #         break
-    # if aria_environment is None:
-    #     raise Exception('Aria Environment not found')
-    
-    aria_environment = payload['aria_lifecycle']['aria_enviorments']
+    for item in payload['aria_lifecycle']['aria_enviorments']:
+        if item['name'] == aria_enviorments_name:
+            aria_environment = item
+            break
+    if aria_environment is None:
+        raise Exception('Aria Environment not found')
     
     target_datacenter = payload['aria_lifecycle']['deployment_datacenter']['name']
     target_vcenter_name_ = payload['aria_lifecycle']['deployment_vcenter']['name']
@@ -72,7 +69,7 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     target_vcenter_datacenters = target_vcenter['vCDataCenters']
     
     for item in target_vcenter_datacenters:
-        if item['vcDataCenterName'] == target_vcenter_datacenter:
+        if item['name'] == target_vcenter_datacenter:
             target_vcenter_datacenter = item
             break
     if target_vcenter_datacenter is None:
@@ -80,22 +77,19 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     
     target_vcenter_username = target_vcenter['vcUsername']
     target_vcenter_password = target_vcenter['vcPassword']
-    
-    for item in target_vcenter_datacenter['clusters']:
+    print(json.dumps(target_vcenter, indent=4)) 
+    for item in target_vcenter['clusters']:
         if item['clusterName'] == target_cluster_name:
             target_cluster = item
             break
     if target_cluster is None:
         raise Exception('Target Cluster not found')
     
-    cluster_name = target_cluster['clusterName']
+    # cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
 
-    print(aria_suite_datastore)
-
-    #Get Cluster Storage
+    # #Get Cluster Storage
     # for item in target_cluster['storages']:
     #     if item['storageName'] == aria_suite_datastore:
-    #         logging.info(f'Cluster Datastore: {item}')
     #         cluster_datastore = item
     #         break
     # if cluster_datastore is None:
@@ -259,4 +253,4 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     
 
 
-    # return environment_details
+    return environment_details

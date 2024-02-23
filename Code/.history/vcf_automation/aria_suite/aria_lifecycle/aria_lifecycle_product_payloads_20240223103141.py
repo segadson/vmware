@@ -1,6 +1,5 @@
 import requests
 import json
-import logging
 from requests.exceptions import RequestException
 from requests.exceptions import HTTPError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -34,12 +33,12 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
 
     aria_lifecycle_ip = payload['aria_lifecycle']['hostname']
 
-    # for item in payload['aria_lifecycle']['aria_enviorments']:
-    #     if item['name'] == aria_enviorments_name:
-    #         aria_environment = item
-    #         break
-    # if aria_environment is None:
-    #     raise Exception('Aria Environment not found')
+    for item in payload['aria_lifecycle']['aria_enviorments']:
+        if item['name'] == aria_enviorments_name:
+            aria_environment = item
+            break
+    if aria_environment is None:
+        raise Exception('Aria Environment not found')
     
     aria_environment = payload['aria_lifecycle']['aria_enviorments']
     
@@ -88,14 +87,11 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     if target_cluster is None:
         raise Exception('Target Cluster not found')
     
-    cluster_name = target_cluster['clusterName']
+    # cluster_name = f'{target_vcenter["vCDatacenterName"]}#{target_cluster["clusterName"]}'
 
-    print(aria_suite_datastore)
-
-    #Get Cluster Storage
+    # #Get Cluster Storage
     # for item in target_cluster['storages']:
     #     if item['storageName'] == aria_suite_datastore:
-    #         logging.info(f'Cluster Datastore: {item}')
     #         cluster_datastore = item
     #         break
     # if cluster_datastore is None:
@@ -259,4 +255,4 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     
 
 
-    # return environment_details
+    return environment_details

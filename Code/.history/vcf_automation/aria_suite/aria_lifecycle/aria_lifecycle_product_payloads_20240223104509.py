@@ -90,8 +90,6 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
     
     cluster_name = target_cluster['clusterName']
 
-    print(aria_suite_datastore)
-
     #Get Cluster Storage
     # for item in target_cluster['storages']:
     #     if item['storageName'] == aria_suite_datastore:
