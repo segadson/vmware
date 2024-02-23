@@ -257,7 +257,7 @@ def create_aria_lifecycle_certificate(aria_lifecycle_ip,alias, hostnames, ip_add
             "tenant": "string",
             "validity": 729
             })
-    print(payload)
+    print(json.dumps(payload, indent=4))
     response = requests.post(url, headers=headers, data=payload, auth=(username, password), verify=False)
     return_response = return_json(response)
     

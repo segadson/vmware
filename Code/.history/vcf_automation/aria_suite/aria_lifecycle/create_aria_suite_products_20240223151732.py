@@ -36,7 +36,7 @@ def dummy_payload():
       "products": {
         "aria_automation": {
           "version:": "1.0.0",
-          "clusterVIP": "192.168.1.105",
+          "clusterVIP": "local-vra-lb.seanlab.local",
           "nodes": [
             {
               "type": "vrava-primary",
@@ -66,7 +66,7 @@ def dummy_payload():
         },
         "aria_operations": {
           "version": "1.0.0",
-          "clusterVIP": "192.168.1.93",
+          "clusterVIP": "",
           "nodes": [
             {
               "type": "master",
@@ -114,29 +114,29 @@ def dummy_payload():
         },
         "aria_operations_network": {
           "version": "1.0.0",
-          "clusterVIP": "192.168.1.100",
+          "clusterVIP": "",
           "nodes": [
             {
               "type": "vrni-platform",
               "properties": {
-                "vmName": "vrni-platform",
-                "ipAddress": "192.168.1.98",
-                "hostname": "vrni-platform.seanlab.local"
+                "vmName": "local-vrni",
+                "ipAddress": "",
+                "hostname": "local-vrni.seanlab.local"
               }
             },
             {
               "type": "vrni-collector",
               "properties": {
-                "vmName": "vrni-collector",
-                "ipAddress": "192.168.1.99",
-                "hostname": "vrni-collector.seanlab.local"
+                "vmName": "local-vrni-2",
+                "ipAddress": "",
+                "hostname": "local-vrni-2.seanlab.local"
               }
             }
           ]
         },
         "aria_operations_logs": {
           "version": "1.0.0",
-          "clusterVIP": "192.168.1.108",
+          "clusterVIP": "",
           "nodes": [
             {
               "type": "vrli-master",

@@ -185,10 +185,14 @@ def get_aria_lifecycle_environment_details(payload, aria_enviorments_name, *args
         aria_operations_logs_ip_addresses.append(node['properties']['ipAddress'])
 
     #Get Hostnames and IP Addresses
-    hostnames = aria_automation_hostnames + aria_operations_hostnames + aria_operations_network_hostnames + aria_operations_logs_hostnames
-    ip_addresses = aria_automation_ip_addresses + aria_operations_ip_addresses + aria_operations_network_ip_addresses + aria_operations_logs_ip_addresses + aria_automation_cluster_vip + aria_operations_cluster_vip + aria_operations_network_cluster_vip + aria_operations_logs_cluster_vip
-    print(ip_addresses)
-
+    hostnames = []
+    ip_addresses = []
+    hostnames.concat(aria_automation_hostnames, aria_operations_hostnames, aria_operations_network_hostnames, aria_operations_logs_hostnames)
+    ip_addresses.concat(aria_automation_ip_addresses, aria_operations_ip_addresses, aria_operations_network_ip_addresses, aria_operations_logs_ip_addresses,
+                    aria_automation_cluster_vip, aria_operations_cluster_vip, 
+                    aria_operations_network_cluster_vip, 
+                    aria_operations_logs_cluster_vip)
+                    
     #Creating Product Alias
     product_alias = f'{aria_enviorments_name}'
 

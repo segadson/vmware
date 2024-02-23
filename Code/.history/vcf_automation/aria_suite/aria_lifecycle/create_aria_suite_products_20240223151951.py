@@ -36,7 +36,7 @@ def dummy_payload():
       "products": {
         "aria_automation": {
           "version:": "1.0.0",
-          "clusterVIP": "192.168.1.105",
+          "clusterVIP": "local-vra-lb.seanlab.local",
           "nodes": [
             {
               "type": "vrava-primary",
@@ -136,7 +136,7 @@ def dummy_payload():
         },
         "aria_operations_logs": {
           "version": "1.0.0",
-          "clusterVIP": "192.168.1.108",
+          "clusterVIP": "192.168.1.93",
           "nodes": [
             {
               "type": "vrli-master",
